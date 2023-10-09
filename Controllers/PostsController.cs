@@ -28,6 +28,7 @@ public class PostController : ControllerBase
         .ToList());
     }
 
+
     [HttpGet("{id}")]
     // [Authorize]
     public IActionResult GetSinglePost(int id)
@@ -43,5 +44,17 @@ public class PostController : ControllerBase
         }
 
         return Ok(post);
+
+    [HttpGet("my-posts/{userId}")]
+    // [Authorize]
+    public IActionResult GetCurrentUserPosts(int userId)
+    {
+        return Ok(_dbContext.Posts
+        .Include(p => p.Category)
+        .Include(p => p.UserProfile)
+        .Where(p => p.UserProfileId == userId)
+        .OrderBy(p => p.PublishDateTime)
+        .ToList());
+
     }
 }

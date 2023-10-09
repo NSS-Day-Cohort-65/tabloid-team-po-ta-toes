@@ -65,6 +65,14 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                     All Posts
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink}
+                    to="/my-posts"
+                  >
+                    My Posts
+                  </NavLink>
+                </NavItem>
                  <NavItem>
               <NavLink tag={RRNavLink} to="/tags">
                 Tag Management
