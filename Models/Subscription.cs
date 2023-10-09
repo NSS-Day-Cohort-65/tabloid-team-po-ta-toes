@@ -12,6 +12,6 @@ public class Subscription
     [ForeignKey("ProviderUserProfileId")]
     public UserProfile ProviderUserProfile { get; set;}
     public DateTime BeginDateTime { get; set;}
-    public DateTime EndDateTime { get; set;}
+    public DateTime? EndDateTime { get; set;}
 
 }
