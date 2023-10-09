@@ -7,6 +7,7 @@ import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import CategoryList from "./categories/CategoryList.js";
 import { PostsAll } from "./posts/PostsAll.js";
 import { ViewAllTags } from "./ViewAllTags";
+import NewCategoryForm from "./categories/NewCategoryForm.js";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -69,6 +70,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         element={
           <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
             <CategoryList />
+          </AuthorizedRoute>
+        }
+        />
+        <Route
+        path="/categories/create"
+        element={
+          <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+            <NewCategoryForm />
           </AuthorizedRoute>
         }
         />
