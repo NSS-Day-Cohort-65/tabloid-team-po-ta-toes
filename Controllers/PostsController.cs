@@ -30,7 +30,7 @@ public class PostController : ControllerBase
 
 
     [HttpGet("{id}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult GetSinglePost(int id)
     {
         Post post = _dbContext.Posts
@@ -44,9 +44,10 @@ public class PostController : ControllerBase
         }
 
         return Ok(post);
+    }
 
     [HttpGet("my-posts/{userId}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult GetCurrentUserPosts(int userId)
     {
         return Ok(_dbContext.Posts
