@@ -6,7 +6,7 @@ import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import CategoryList from "./categories/CategoryList.js";
 import { PostsAll } from "./posts/PostsAll.js";
-import { ViewAllTags } from "./ViewAllTags";
+import { ViewAllTags } from "./tags/ViewAllTags";
 import MyPosts from "./posts/MyPosts";
 
 

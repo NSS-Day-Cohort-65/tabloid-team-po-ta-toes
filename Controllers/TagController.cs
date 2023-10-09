@@ -24,4 +24,21 @@ public class TagController : ControllerBase
         return Ok(_dbContext.Tags.OrderBy(t => t.Name).ToList());
     }
 
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult DeleteTag(int id) 
+    {
+        Tag tagToDelete = _dbContext.Tags.SingleOrDefault(t => t.Id == id);
+
+        if (tagToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Remove(tagToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
 }
