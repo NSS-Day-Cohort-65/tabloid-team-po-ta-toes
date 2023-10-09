@@ -5,6 +5,8 @@ import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import CategoryList from "./categories/CategoryList.js";
+import { ViewAllTags } from "./ViewAllTags";
+
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -43,6 +45,10 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         <Route
           path="register"
           element={<Register setLoggedInUser={setLoggedInUser} />}
+        />
+        <Route
+        path="tags"
+        element={<ViewAllTags/>}
         />
       </Route>
       <Route path="/categories">
