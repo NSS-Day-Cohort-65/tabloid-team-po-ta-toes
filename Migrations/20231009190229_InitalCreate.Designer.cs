@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tabloid.Data;
@@ -11,9 +12,10 @@ using Tabloid.Data;
 namespace Tabloid.Migrations
 {
     [DbContext(typeof(TabloidDbContext))]
-    partial class TabloidDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231009190229_InitalCreate")]
+    partial class InitalCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +152,6 @@ namespace Tabloid.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-
                             ConcurrencyStamp = "24cda6ca-33c8-4e82-bc14-5e87a762cc44",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
@@ -158,7 +159,6 @@ namespace Tabloid.Migrations
                             PasswordHash = "AQAAAAEAACcQAAAAEPX23gcSASmjAqSb6OJH+r9aRTwhuZewYit7HDY0SzWzIXcdLYZizM72FAtytg57tQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "03e58bbf-8f61-4005-a618-c2d706de7c1a",
-
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },

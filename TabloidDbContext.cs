@@ -177,7 +177,7 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
             new Post
             {
                 Id = 1,
-                Title = "Celebrity",
+                Title = "LEAVE BRITTANY ALONE!",
                 Content = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam, eveniet amet quibusdam neque culpa aliquam consectetur quod ab. Perspiciatis expedita deserunt alias modi enim voluptates aliquid cum qui illo, cumque officiis aliquam dignissimos nesciunt veniam voluptatum dicta vitae magnam? Expedita voluptates facilis maxime nostrum rem ratione amet aliquid nemo ipsum, mollitia officiis animi! Nostrum excepturi totam officia voluptates optio rerum porro nam, sed laudantium voluptatem tempore minus obcaecati nemo natus unde vitae? Aspernatur reprehenderit optio ex in eveniet autem accusantium repellat nisi iure eligendi, itaque sint atque. Quam sequi perferendis tempora nisi cumque explicabo blanditiis quasi? Corporis aut eos tempora.",
                 ImageLocation = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.cleveland.com%2Fresizer%2FfTBHPXlkMkx6hAoKulGFxst1GmA%3D%2F1280x0%2Fsmart%2Fadvancelocal-adapter-image-uploads.s3.amazonaws.com%2Fimage.cleveland.com%2Fhome%2Fcleve-media%2Fwidth2048%2Fimg%2Fent_impact_people%2Fphoto%2Fbritney-spears-smilesjpg-bc9ec1d98624efbe.jpg&f=1&nofb=1&ipt=5e4da77236a12324f6a3c0a1341db32de725afc4fbdf2de2fac077345ed58cdb&ipo=images",
                 CreateDateTime = new DateTime(2023,10,9, 10, 0, 0),
@@ -193,6 +193,7 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
                 Content = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam, eveniet amet quibusdam neque culpa aliquam consectetur quod ab. Perspiciatis expedita deserunt alias modi enim voluptates aliquid cum qui illo, cumque officiis aliquam dignissimos nesciunt veniam voluptatum dicta vitae magnam? Expedita voluptates facilis maxime nostrum rem ratione amet aliquid nemo ipsum, mollitia officiis animi! Nostrum excepturi totam officia voluptates optio rerum porro nam, sed laudantium voluptatem tempore minus obcaecati nemo natus unde vitae? Aspernatur reprehenderit optio ex in eveniet autem accusantium repellat nisi iure eligendi, itaque sint atque. Quam sequi perferendis tempora nisi cumque explicabo blanditiis quasi? Corporis aut eos tempora.",
                 ImageLocation = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.theusaupdatezone.com%2Fwp-content%2Fuploads%2F2023%2F10%2FAmerican-football-600x337.webp&f=1&nofb=1&ipt=5bb1f470c193ed1422af81181e022635597b376160d5c4e52170a69d742fdf9b&ipo=images",
                 CreateDateTime = new DateTime(2023,10,9, 10, 0, 0),
+                PublishDateTime = null,
                 IsApproved = false,
                 CategoryId = 2,
                 UserProfileId = 1
