@@ -26,4 +26,15 @@ public class PostController : ControllerBase
         .OrderBy(p => p.PublishDateTime)
         .ToList());
     }
+    [HttpGet("my-posts/{userId}")]
+    // [Authorize]
+    public IActionResult GetCurrentUserPosts(int userId)
+    {
+        return Ok(_dbContext.Posts
+        .Include(p => p.Category)
+        .Include(p => p.UserProfile)
+        .Where(p => p.UserProfileId == userId)
+        .OrderBy(p => p.PublishDateTime)
+        .ToList());
+    }
 }
