@@ -24,4 +24,14 @@ public class TagController : ControllerBase
         return Ok(_dbContext.Tags.OrderBy(t => t.Name).ToList());
     }
 
+    [HttpPost]
+    // [Authorize]
+
+    public IActionResult CreateTag(Tag newTag)
+    {
+        _dbContext.Tags.Add(newTag);
+        _dbContext.SaveChanges();
+        return Created($"/api/tag/{newTag.Id}", newTag);
+    }
+
 }
