@@ -58,6 +58,11 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                     All Posts
                   </NavLink>
                 </NavItem>
+                 <NavItem>
+              <NavLink tag={RRNavLink} to="/tags">
+                Tag Management
+              </NavLink>
+            </NavItem>
               </Nav>
             </Collapse>
             <Button

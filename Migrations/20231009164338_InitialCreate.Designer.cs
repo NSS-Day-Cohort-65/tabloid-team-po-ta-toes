@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tabloid.Data;
@@ -11,9 +12,10 @@ using Tabloid.Data;
 namespace Tabloid.Migrations
 {
     [DbContext(typeof(TabloidDbContext))]
-    partial class TabloidDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231009164338_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace Tabloid.Migrations
                         new
                         {
                             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
-                            ConcurrencyStamp = "6f7569db-6bdf-4cd9-b48f-d7bf63063f59",
+                            ConcurrencyStamp = "1009d5f7-4561-49a1-af4a-1f95a0b968a3",
                             Name = "Admin",
                             NormalizedName = "admin"
                         });
@@ -150,15 +152,13 @@ namespace Tabloid.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-
-                            ConcurrencyStamp = "24cda6ca-33c8-4e82-bc14-5e87a762cc44",
+                            ConcurrencyStamp = "a212ee40-43fe-404b-a985-26e8570261b5",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEPX23gcSASmjAqSb6OJH+r9aRTwhuZewYit7HDY0SzWzIXcdLYZizM72FAtytg57tQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE5HvDZc+EclatjvuUkku7G6uafdiOIdKONnfaE8/rZcW9/Xem4e2mfOTp8NrNu1pw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "03e58bbf-8f61-4005-a618-c2d706de7c1a",
-
+                            SecurityStamp = "84564636-a3df-4d5c-bcbb-3c445364f11a",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -166,13 +166,13 @@ namespace Tabloid.Migrations
                         {
                             Id = "d8d76512-74f1-43bb-b1fd-87d3a8aa36df",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0085c707-bcb5-44c6-822f-8f364bbaed63",
+                            ConcurrencyStamp = "c16e001d-d6b8-4502-8b73-39625f001e58",
                             Email = "john@doe.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEB09HRUu7LA09rm28fiwXGO9mHnlM6oFCTarw0UucaUa85WFNpnQFGCNsQdLSXv0Jg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHDEIuZd84ASJoVCmfTHvfIBIgl5o5QDNdLZlk9o7BMMeEHFtkJQ7Kz/0Zxih/I5tw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a6aac933-595a-449a-b8b7-a31914282b04",
+                            SecurityStamp = "2b79269b-83f5-4356-831f-e1888a6912ff",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         },
@@ -180,13 +180,13 @@ namespace Tabloid.Migrations
                         {
                             Id = "a7d21fac-3b21-454a-a747-075f072d0cf3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "069861db-4d1c-455e-91ea-ea18c8116740",
+                            ConcurrencyStamp = "7f3323c4-1bae-4deb-82a6-e838541a9c74",
                             Email = "jane@smith.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEBeA5d/FFF1BqjAAnsdr7+uFO9W01owIIEsTyAxm/Xs7fzTH9Ofd2MoWnrgsPku18Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELqaIE7hPZjLDl/P/81frImi8FvFtZySu7SIYO0nkYdS8MtG1jcqrK71i23xLxibjA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cae07ccb-d086-4de3-9ea1-658784761f20",
+                            SecurityStamp = "7599933f-6096-4581-bae6-e38a5672787d",
                             TwoFactorEnabled = false,
                             UserName = "JaneSmith"
                         },
@@ -194,13 +194,13 @@ namespace Tabloid.Migrations
                         {
                             Id = "c806cfae-bda9-47c5-8473-dd52fd056a9b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3d3dbf5d-5fa1-4497-9503-dfcc0ee80c0d",
+                            ConcurrencyStamp = "da15fe87-0b07-4916-b967-17da97e99930",
                             Email = "alice@johnson.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEEpx4Q1AaeGSqVnIOAxvImQGqzsHbPNyMMbK+zRaDekakwU+viumO3QS4eJKEnAVXg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGyLYzkkNFjoCE5CDxxUqn0HNdjFoTyi+Hbrbtn49+1dkFLykrXL6SZyzzcDgQcqVA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "49f71229-3956-4bfb-8c80-42f639924a45",
+                            SecurityStamp = "ffffbf59-37bc-4eb3-83cb-f16f8bd56fbd",
                             TwoFactorEnabled = false,
                             UserName = "AliceJohnson"
                         },
@@ -208,13 +208,13 @@ namespace Tabloid.Migrations
                         {
                             Id = "9ce89d88-75da-4a80-9b0d-3fe58582b8e2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e02f2c1b-2816-4ceb-8b5c-c04d30818a3f",
+                            ConcurrencyStamp = "47c97535-345d-4a32-bade-7cd4eb6a3e60",
                             Email = "bob@williams.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEDcLPhOVe6KonauGAtGsKLn7OVDiCu+Hw81eTYJb2tpS2yoI6hx18XEOwKPJuqxlaw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF8LqozYQ+uxWZ/Zs4l0kXLgE9f70CSulmS6QkPL/45+P2DqDSMiYstRvSuhmH7UFQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bad57088-9147-408c-911b-1bf1a0f7c8d3",
+                            SecurityStamp = "71a33555-48cc-443f-8575-483cadf5889f",
                             TwoFactorEnabled = false,
                             UserName = "BobWilliams"
                         },
@@ -222,13 +222,13 @@ namespace Tabloid.Migrations
                         {
                             Id = "d224a03d-bf0c-4a05-b728-e3521e45d74d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ede86cdf-2efa-4048-b01d-e6f7a346ff1a",
+                            ConcurrencyStamp = "51da568a-b858-4fb0-b2cb-0037563f3db0",
                             Email = "Eve@Davis.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEI5GcOupXvPdYGatf9pVkHj9CXg4QIO+v+cE5xNEgut4luGWEGu5yPBR26APIPdzgQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPAK2bAPhuDV++2uSnfWXhVtX1c+kXGguVH8FBJjUBSo9wkvWcr8SRq2/je28DayRg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dcf460c4-297d-4d15-833a-f4f8c8f04743",
+                            SecurityStamp = "62a637cf-3bd5-4d68-8737-605e964f4d61",
                             TwoFactorEnabled = false,
                             UserName = "EveDavis"
                         });
@@ -467,7 +467,7 @@ namespace Tabloid.Migrations
                             ImageLocation = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.cleveland.com%2Fresizer%2FfTBHPXlkMkx6hAoKulGFxst1GmA%3D%2F1280x0%2Fsmart%2Fadvancelocal-adapter-image-uploads.s3.amazonaws.com%2Fimage.cleveland.com%2Fhome%2Fcleve-media%2Fwidth2048%2Fimg%2Fent_impact_people%2Fphoto%2Fbritney-spears-smilesjpg-bc9ec1d98624efbe.jpg&f=1&nofb=1&ipt=5e4da77236a12324f6a3c0a1341db32de725afc4fbdf2de2fac077345ed58cdb&ipo=images",
                             IsApproved = true,
                             PublishDateTime = new DateTime(2023, 10, 9, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "LEAVE BRITTANY ALONE!",
+                            Title = "Celebrity",
                             UserProfileId = 1
                         },
                         new
