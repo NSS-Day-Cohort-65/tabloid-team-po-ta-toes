@@ -15,7 +15,6 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
     public DbSet<PostReaction> PostReactions { get; set; }
     public DbSet<PostTag> PostTags { get; set; }
     public DbSet<Reaction> Reactions { get; set; }
-    public DbSet<Registration> Registrations { get; set; }
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
@@ -279,7 +278,7 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
             },
             new Subscription
             {
-                Id = 1,
+                Id = 2,
                 SubscriberUserProfileId = 3,
                 ProviderUserProfileId = 1,
                 BeginDateTime = new DateTime(2023, 9, 20),
