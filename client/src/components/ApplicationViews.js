@@ -7,6 +7,7 @@ import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import CategoryList from "./categories/CategoryList.js";
 import { PostsAll } from "./posts/PostsAll.js";
 import { ViewAllTags } from "./ViewAllTags";
+import { PostDetails } from "./posts/PostDetails.js";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -48,6 +49,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
+          <Route path=":id" element={<PostDetails />}></Route>
           
         </Route>
         <Route
