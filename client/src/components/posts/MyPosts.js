@@ -20,11 +20,10 @@ export default function MyPosts ({ loggedInUser }) {
     return (
       <>
         <div className="container">
-          <h2>All Posts</h2>
+          <h2>My Posts</h2>
           <Table>
             <thead>
               <th>Title</th>
-              <th>Author</th>
               <th>Category</th>
               <th></th>
             </thead>
@@ -32,7 +31,6 @@ export default function MyPosts ({ loggedInUser }) {
               {posts.map((p, index) => (
                 <tr key={index}>
                   <td>{p.title}</td>
-                  <td>{p.userProfile.fullName}</td>
                   <td>{p.category.name}</td>
                   <td>
                     <Button>View Post</Button>
