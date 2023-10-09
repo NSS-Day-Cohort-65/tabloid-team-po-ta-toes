@@ -5,6 +5,7 @@ import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import CategoryList from "./categories/CategoryList.js";
+import { PostsAll } from "./posts/PostsAll.js";
 import { ViewAllTags } from "./ViewAllTags";
 
 
@@ -37,6 +38,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
+        </Route>
+        <Route path="/posts">
+          <Route
+            index
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <PostsAll />
+              </AuthorizedRoute>
+            }
+          />
+          
         </Route>
         <Route
           path="login"
