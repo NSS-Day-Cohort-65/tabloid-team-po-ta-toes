@@ -40,7 +40,8 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
               navbar
             >
               <Nav navbar>
-                {loggedInUser.roles.includes('Admin') && (
+                {loggedInUser.roles.includes("Admin") && (
+                  <>
                   <NavItem>
                     <NavLink
                       tag={RRNavLink}
@@ -49,6 +50,12 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                       User Profiles
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink tag={RRNavLink} to="/categories">
+                      Category Management
+                    </NavLink>
+                  </NavItem>
+                  </>
                 )}
                 <NavItem>
                   <NavLink

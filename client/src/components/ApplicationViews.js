@@ -4,8 +4,10 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
+import CategoryList from "./categories/CategoryList.js";
 import { PostsAll } from "./posts/PostsAll.js";
 import { ViewAllTags } from "./ViewAllTags";
+
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -59,6 +61,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         <Route
         path="tags"
         element={<ViewAllTags/>}
+        />
+      </Route>
+      <Route path="/categories">
+        <Route
+        index
+        element={
+          <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+            <CategoryList />
+          </AuthorizedRoute>
+        }
         />
       </Route>
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
