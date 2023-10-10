@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
-import { fetchSinglePost } from '../../managers/postManager.js';
-import { useParams } from 'react-router-dom';
-import './PostDetails.css';
-import { Col, Row } from 'reactstrap';
+import { useEffect, useState } from "react";
+import { fetchSinglePost } from "../../managers/postManager.js";
+import { useParams } from "react-router-dom";
+import "./PostDetails.css";
+import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
+import { getAllTags } from "../../managers/tagManager.js";
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
+  const [tagList, setTagList] = useState();
   const { id } = useParams();
+  const [viewTags, setViewTags] = useState(false);
 
   const getSinglePost = () => {
     fetchSinglePost(id).then(setPost);
@@ -14,6 +17,7 @@ export const PostDetails = () => {
 
   useEffect(() => {
     getSinglePost();
+    getAllTags().then(setTagList);
   }, []);
 
   const dateFormatter = (date) => {
@@ -25,11 +29,11 @@ export const PostDetails = () => {
     const hours = parsedDate.getHours();
     const minutes = parsedDate.getMinutes();
 
-    const formattedDate = `${month.toString().padStart(2, '0')}/${day
+    const formattedDate = `${month.toString().padStart(2, "0")}/${day
       .toString()
-      .padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes
+      .padStart(2, "0")}/${year} ${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, '0')}`;
+      .padStart(2, "0")}`;
 
     return formattedDate;
   };
@@ -51,16 +55,23 @@ export const PostDetails = () => {
             </Col>
             {post.imageLocation ? (
               <Col className="post-image-col">
-                <img
-                  className="post-image"
-                  src={post.imageLocation}
-                  alt=""
-                />
+                <img className="post-image" src={post.imageLocation} alt="" />
               </Col>
             ) : (
-              ''
+              ""
             )}
           </Row>
+        </div>
+        <div className="tags--open-close">
+          <Button onClick={() => setViewTags(!viewTags)}> Manage Tags</Button>
+          <div className={`tags--select ${viewTags ? null : "hide"}`}>
+            {tagList.map((t) => (
+              <FormGroup key={`tag--${t.id}`} check>
+                <Input type="checkbox" name={t.id} />
+                <Label check>{t.name}</Label>
+              </FormGroup>
+            ))}
+          </div>
         </div>
       </div>
     </>
