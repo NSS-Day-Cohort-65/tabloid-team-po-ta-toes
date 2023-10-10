@@ -12,3 +12,9 @@ export const fetchMyPosts = (userId) => {
   return fetch(`${_apiUrl}/my-posts/${userId}`).then((res) => res.json());
 
 };
+
+export const deletePost = (id) => {
+  return fetch(`${_apiUrl}/${id}`, {
+      method: "DELETE"
+  })
+};
