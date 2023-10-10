@@ -63,12 +63,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <PostDetails />
+                <PostDetails loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />
-          <Route path=":id" element={<PostDetails loggedInUser={loggedInUser}/>}></Route>
-          
+          <Route
+            path=":id"
+            element={<PostDetails loggedInUser={loggedInUser} />}
+          ></Route>
         </Route>
         <Route path="/my-posts">
           <Route
@@ -101,8 +103,8 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={<ViewAllTags />}
         />
         <Route
-        path="tags/create"
-        element={<CreateNewTag/>}
+          path="tags/create"
+          element={<CreateNewTag />}
         />
       </Route>
       <Route path="/categories">
