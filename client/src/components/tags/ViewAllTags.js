@@ -15,7 +15,7 @@ export const ViewAllTags = () => {
         e.preventDefault();
 
         deleteTag(tagId)
-            .then(() => getAllTags())
+            .then(() => getAllTags().then(setTags))
     };
 
     return (
