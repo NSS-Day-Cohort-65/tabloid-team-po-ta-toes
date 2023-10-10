@@ -1,15 +1,28 @@
 import { useEffect, useState } from 'react';
-import { fetchSinglePost } from '../../managers/postManager.js';
-import { useParams } from 'react-router-dom';
+import { deletePost, fetchSinglePost } from '../../managers/postManager.js';
+import { useNavigate, useParams } from 'react-router-dom';
 import './PostDetails.css';
-import { Col, Row } from 'reactstrap';
+import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from 'reactstrap';
 
-export const PostDetails = () => {
+export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
+  const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const getSinglePost = () => {
     fetchSinglePost(id).then(setPost);
+  };
+
+  const toggle = () => {
+    setModal(!modal);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    deletePost(post.id)
+      .then(() =>navigate("/posts"))
   };
 
   useEffect(() => {
@@ -71,6 +84,29 @@ export const PostDetails = () => {
             )}
           </Row>
         </div>
+        {
+          post.userProfileId === loggedInUser.id 
+          ?<Button color="danger" onClick={() => {
+            toggle() 
+            }}>Delete</Button>
+          :<></>
+        }
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Are you sure you want to delete this Post?</ModalHeader>
+          <ModalFooter>
+            <Button color="danger" onClick={(e) => {
+              toggle()
+              handleDelete(e)
+            }}>
+              Confirm Deletion
+            </Button>{' '}
+            <Button color="primary" onClick={() => {
+              toggle()
+            }}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </>
   );

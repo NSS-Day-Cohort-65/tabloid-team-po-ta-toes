@@ -19,3 +19,8 @@ export const fetchCreateNewPost = (post) => {
     body: JSON.stringify(post)
   }).then(res => res.json())
 }
+export const deletePost = (id) => {
+  return fetch(`${_apiUrl}/${id}`, {
+      method: "DELETE"
+  })
+};
