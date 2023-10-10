@@ -19,3 +19,15 @@ export const deleteTag = (id) => {
     })
 };
 
+export const editTag = (id, name) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(
+            {
+            id: id,
+            name: name
+        })
+    })
+}
+

@@ -34,6 +34,7 @@ public class TagController : ControllerBase
 
     [HttpDelete("{id}")]
     [Authorize]
+    
     public IActionResult DeleteTag(int id) 
     {
         Tag tagToDelete = _dbContext.Tags.SingleOrDefault(t => t.Id == id);
@@ -46,6 +47,21 @@ public class TagController : ControllerBase
         _dbContext.Remove(tagToDelete);
         _dbContext.SaveChanges();
 
+        return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    [Authorize]
+
+    public IActionResult EditTag(int id, Tag tag)
+    {
+        Tag tagToUpdate = _dbContext.Tags.SingleOrDefault(t => t.Id == id);
+        if (tagToUpdate == null)
+        {
+            return NotFound();
+        }
+        tagToUpdate.Name = tag.Name;
+        _dbContext.SaveChanges();
         return NoContent();
     }
 
