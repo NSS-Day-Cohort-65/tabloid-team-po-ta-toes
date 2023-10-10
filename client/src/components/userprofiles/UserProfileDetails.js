@@ -11,6 +11,24 @@ export default function UserProfileDetails() {
     getProfile(id).then(setUserProfile);
   }, [id]);
 
+  const dateFormatter = (date) => {
+    const parsedDate = new Date(date);
+
+    const day = parsedDate.getDate();
+    const month = parsedDate.getMonth() + 1;
+    const year = parsedDate.getFullYear();
+    const hours = parsedDate.getHours();
+    const minutes = parsedDate.getMinutes();
+
+    const formattedDate = `${month.toString().padStart(2, '0')}/${day
+      .toString()
+      .padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}`;
+
+    return formattedDate;
+  };
+
   if (!userProfile) {
     return null;
   }
@@ -19,6 +37,9 @@ export default function UserProfileDetails() {
       <img src={userProfile.imageLocation} alt={userProfile.firstName} />
       <h3>{userProfile.fullName}</h3>
       <p>Username: {userProfile.userName}</p>
+      <p>Email: {userProfile.email}</p>
+      <p>Creation Date: {dateFormatter(userProfile.createDateTime)}</p>
+      <p>User Profile Type(s): {userProfile.roles.length ? userProfile.roles.map(r => r + " ") : "Default"}</p>
     </>
   );
 }
