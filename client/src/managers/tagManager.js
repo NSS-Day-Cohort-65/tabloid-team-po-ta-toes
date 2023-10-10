@@ -17,5 +17,5 @@ export const deleteTag = (id) => {
     return fetch(`${_apiUrl}/${id}`, {
         method: "DELETE"
     })
-  }
+};
 
