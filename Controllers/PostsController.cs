@@ -58,4 +58,21 @@ public class PostController : ControllerBase
         .ToList());
 
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult DeletePost(int id) 
+    {
+        Post PostToDelete = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+
+        if (PostToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Remove(PostToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
