@@ -35,7 +35,7 @@ export default function MyPosts ({ loggedInUser }) {
                   <td>{p.title}</td>
                   <td>{p.category.name}</td>
                   <td>
-                    <Button>View Post</Button>
+                    <Button onClick={() => navigate(`/posts/${p.id}`)}>View Post</Button>
                   </td>
                 </tr>
               ))}

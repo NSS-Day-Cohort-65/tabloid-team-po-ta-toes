@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Form, FormGroup, Input, Label, Spinner } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Spinner } from 'reactstrap';
 import { getCategories } from '../../managers/categoryManager.js';
 import { getAllTags } from '../../managers/tagManager.js';
+import { fetchCreateNewPost } from '../../managers/postManager.js';
 
 export const CreateNewPost = ({ loggedInUser }) => {
   const [categories, setCategories] = useState();
@@ -9,7 +10,8 @@ export const CreateNewPost = ({ loggedInUser }) => {
   const [newPost, setNewPost] = useState({
     title: '',
     content: '',
-    imageLocation: '',
+    imageLocation: null,
+    categoryId: null,
     tags: [],
   });
 
@@ -48,6 +50,31 @@ export const CreateNewPost = ({ loggedInUser }) => {
       });
     }
   };
+
+  const handleSubmit = () => {
+      if(newPost.title && newPost.content && newPost.tags.length > 0 && newPost.categoryId){
+
+          let convertedTagsToPostTags = []
+          for (const t of newPost.tags) {
+              let newPT = {
+                  tagId: t.id,
+                  tag: t
+              }
+              convertedTagsToPostTags.push(newPT)
+          }
+          let newPostToSubmit = {
+              title: newPost.title,
+              content: newPost.content,
+              imageLocation: newPost.imageLocation,
+              categoryId: newPost.categoryId,
+              postTags: convertedTagsToPostTags,
+              userProfileId: loggedInUser.id
+          }
+          fetchCreateNewPost(newPostToSubmit);
+          
+      }
+
+  }
 
   if (!categories || !tags) {
     return <Spinner />;
@@ -116,6 +143,7 @@ export const CreateNewPost = ({ loggedInUser }) => {
             </FormGroup>
           ))}
         </Form>
+        <Button onClick={handleSubmit} color='primary'>Submit</Button>
       </div>
     </>
   );

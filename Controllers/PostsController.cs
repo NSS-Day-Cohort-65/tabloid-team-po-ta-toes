@@ -58,4 +58,29 @@ public class PostController : ControllerBase
         .ToList());
 
     }
+
+    [HttpPost("my-posts")]
+    [Authorize]
+    public IActionResult CreateNewPost(Post post)
+    {
+        post.CreateDateTime = DateTime.Now;
+        post.IsApproved = false;
+        post.Category = _dbContext.Categories.Single(c => c.Id == post.CategoryId);
+
+        List<PostTag> newPostTags = new List<PostTag>();
+
+        foreach (PostTag pt in post.PostTags)
+        {
+            pt.Tag = _dbContext.Tags.Single(t => t.Id == pt.TagId);
+            newPostTags.Add(pt);
+        }
+
+        post.PostTags = newPostTags;
+
+        _dbContext.Posts.Add(post);
+        _dbContext.SaveChanges();
+
+        return Created($"/api/post/my-post/{post.Id}", post);
+
+    }
 }
