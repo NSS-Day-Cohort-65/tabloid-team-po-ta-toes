@@ -32,6 +32,21 @@ public class TagController : ControllerBase
         _dbContext.Tags.Add(newTag);
         _dbContext.SaveChanges();
         return Created($"/api/tag/{newTag.Id}", newTag);
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult DeleteTag(int id) 
+    {
+        Tag tagToDelete = _dbContext.Tags.SingleOrDefault(t => t.Id == id);
+
+        if (tagToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Remove(tagToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
     }
 
 }

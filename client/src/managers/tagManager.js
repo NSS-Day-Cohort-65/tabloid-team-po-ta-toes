@@ -4,6 +4,7 @@ export const getAllTags = () => {
     return fetch(`${_apiUrl}`).then(res => res.json());
 }
 
+
 export const addATag = (newTag) => {
     return fetch(`${_apiUrl}`, {
     method: "POST",
@@ -11,3 +12,10 @@ export const addATag = (newTag) => {
     body: JSON.stringify(newTag)
 }).then(res => res.json())
 };
+
+export const deleteTag = (id) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: "DELETE"
+    })
+  }
+
