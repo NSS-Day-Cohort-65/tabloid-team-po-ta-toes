@@ -97,6 +97,7 @@ export const PostDetails = ({ loggedInUser }) => {
           </Row>
         </div>
         {post.userProfileId === loggedInUser.id ? (
+          <>
           <Button
             color="danger"
             onClick={() => {
@@ -105,6 +106,14 @@ export const PostDetails = ({ loggedInUser }) => {
           >
             Delete
           </Button>
+          <Button
+            className="mx-2"
+            color="primary"
+            onClick={() => {navigate(`/posts/${id}/comments`)}}
+          >
+            View Comments
+          </Button>
+          </>
         ) : (
           <></>
         )}

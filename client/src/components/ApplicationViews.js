@@ -13,6 +13,7 @@ import MyPosts from "./posts/MyPosts";
 import NewCategoryForm from "./categories/NewCategoryForm.js";
 import EditCategoryForm from "./categories/EditCategoryForm.js";
 import { CreateNewPost } from "./posts/CreateNewPost.js";
+import CommentList from "./comments/CommentList.js";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -68,6 +69,15 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
+          <Route
+            path=":id/comments"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CommentList />
+              </AuthorizedRoute>
+            }
+          />
+          {/* is this holdover from testing or intended for non users to be able to view posts? */}
           <Route
             path=":id"
             element={<PostDetails loggedInUser={loggedInUser} />}
