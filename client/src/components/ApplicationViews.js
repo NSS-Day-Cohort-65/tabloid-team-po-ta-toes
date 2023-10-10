@@ -11,6 +11,7 @@ import { CreateNewTag } from "./tags/CreateNewTag";
 import { PostDetails } from "./posts/PostDetails.js";
 import MyPosts from "./posts/MyPosts";
 import NewCategoryForm from "./categories/NewCategoryForm.js";
+import EditCategoryForm from "./categories/EditCategoryForm.js";
 import { CreateNewPost } from "./posts/CreateNewPost.js";
 
 
@@ -129,6 +130,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               <NewCategoryForm />
             </AuthorizedRoute>
           }
+        />
+        <Route
+        path="/categories/:id/edit"
+        element={
+          <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+            <EditCategoryForm />
+          </AuthorizedRoute>
+        }
         />
       </Route>
       <Route

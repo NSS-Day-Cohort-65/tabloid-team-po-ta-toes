@@ -39,22 +39,28 @@ export default function CategoryList() {
                 <Table>
                     <thead>
                         <th>Name</th>
-                        <th></th>
                     </thead>
                     <tbody>
-                        {categories.map((c, index) => (
-                            <tr key={index}>
-                                <td>{c.name}</td>
-                                <td>
-                                    <Button color="danger" onClick={() => {
-                                        toggle() 
-                                        setCategoryId(c.id)
+                        {categories.map((c) => (
+                            <>
+                                <tr>
+                                    <td key={c.id}>
+                                        <td>{c.name}</td>
+                                    </td>
+                                    <td>
+                                        <Button onClick={() => { navigate(`/categories/${c.id}/edit`) }}>Edit</Button>
+                                    </td>
+                                    <td>
+                                        <Button color="danger" onClick={() => {
+                                            toggle()
+                                            setCategoryId(c.id)
                                         }}>Delete</Button>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            </>
                         ))}
                         <td>
-                            <Button onClick={() => {navigate("/categories/create")}}>Create Category</Button>
+                            <Button onClick={() => { navigate("/categories/create") }}>Create Category</Button>
                         </td>
                     </tbody>
                 </Table>

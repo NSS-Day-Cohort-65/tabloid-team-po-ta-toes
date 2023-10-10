@@ -25,11 +25,46 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public IActionResult CreateCategory(Category category)
     {
         _dbContext.Categories.Add(category);
         _dbContext.SaveChanges();
         return Created($"/api/category/{category.Id}", category);
+    }
+
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetCategoryById(int id)
+    {
+        Category category = _dbContext
+        .Categories
+        .SingleOrDefault(c => c.Id == id);
+        if (category == null)
+        {
+            return NotFound();
+        }
+        return Ok(category);
+    }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public IActionResult UpdateCategory(Category category, int id)
+    {
+        Category categoryToUpdate = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
+        if (categoryToUpdate == null)
+        {
+            return NotFound();
+        }
+        else if (id != category.Id)
+        {
+            return BadRequest();
+        }
+        categoryToUpdate.Name = category.Name;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
