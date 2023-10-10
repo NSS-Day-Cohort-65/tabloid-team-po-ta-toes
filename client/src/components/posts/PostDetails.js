@@ -47,6 +47,20 @@ export const PostDetails = ({ loggedInUser }) => {
     return formattedDate;
   };
 
+  const readTimeEstimator = (text) => {
+    const AvgWPM = 265;
+    const textWordCount = text.split(" ").length
+    const estimatedTime = Math.ceil(textWordCount / AvgWPM);
+
+    if (estimatedTime === 1)
+    {
+      return "1 min"
+    } else {
+
+      return `${estimatedTime} mins`;
+    }
+  }
+
   if (!post) {
     return null;
   }
@@ -56,7 +70,14 @@ export const PostDetails = ({ loggedInUser }) => {
       <div className="container">
         <h2>{post.title}</h2>
         <h5>By: {post.userProfile.fullName}</h5>
-        <h6>{dateFormatter(post.publishDateTime)}</h6>
+        {post.publishDateTime === null ? (
+          <h6>Not yet published</h6>
+        ) : (
+          <h6>{dateFormatter(post.publishDateTime)}</h6>
+        )}
+        <p>
+          <i>Estimated reading time: {readTimeEstimator(post.content)}</i>
+        </p>
         <div className="container">
           <Row>
             <Col className="post-content-col">
@@ -75,25 +96,41 @@ export const PostDetails = ({ loggedInUser }) => {
             )}
           </Row>
         </div>
-        {
-          post.userProfileId === loggedInUser.id 
-          ?<Button color="danger" onClick={() => {
-            toggle() 
-            }}>Delete</Button>
-          :<></>
-        }
-        <Modal isOpen={modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}>Are you sure you want to delete this Post?</ModalHeader>
+        {post.userProfileId === loggedInUser.id ? (
+          <Button
+            color="danger"
+            onClick={() => {
+              toggle();
+            }}
+          >
+            Delete
+          </Button>
+        ) : (
+          <></>
+        )}
+        <Modal
+          isOpen={modal}
+          toggle={toggle}
+        >
+          <ModalHeader toggle={toggle}>
+            Are you sure you want to delete this Post?
+          </ModalHeader>
           <ModalFooter>
-            <Button color="danger" onClick={(e) => {
-              toggle()
-              handleDelete(e)
-            }}>
+            <Button
+              color="danger"
+              onClick={(e) => {
+                toggle();
+                handleDelete(e);
+              }}
+            >
               Confirm Deletion
             </Button>{' '}
-            <Button color="primary" onClick={() => {
-              toggle()
-            }}>
+            <Button
+              color="primary"
+              onClick={() => {
+                toggle();
+              }}
+            >
               Cancel
             </Button>
           </ModalFooter>
