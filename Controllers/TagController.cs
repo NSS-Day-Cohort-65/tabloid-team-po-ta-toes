@@ -18,7 +18,6 @@ public class TagController : ControllerBase
 
     [HttpGet]
     [Authorize]
-
     public IActionResult GetTags()
     {
         return Ok(_dbContext.Tags.OrderBy(t => t.Name).ToList());
@@ -26,14 +25,13 @@ public class TagController : ControllerBase
 
     [HttpPost]
     // [Authorize]
-
     public IActionResult CreateTag(Tag newTag)
     {
         _dbContext.Tags.Add(newTag);
         _dbContext.SaveChanges();
         return Created($"/api/tag/{newTag.Id}", newTag);
     }
-    
+
     [HttpDelete("{id}")]
     [Authorize]
     

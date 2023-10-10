@@ -31,4 +31,21 @@ public class CategoryController : ControllerBase
         _dbContext.SaveChanges();
         return Created($"/api/category/{category.Id}", category);
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult DeleteCategory(int id) 
+    {
+        Category CategoryToDelete = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
+
+        if (CategoryToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Remove(CategoryToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
