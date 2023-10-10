@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { fetchAllPosts } from '../../managers/postManager.js';
 import { Button, Table } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 export const PostsAll = () => {
   const [posts, setPosts] = useState();
+  const navigate = useNavigate()
 
   const getAllPosts = () => {
     fetchAllPosts().then(setPosts);
@@ -35,7 +37,7 @@ export const PostsAll = () => {
                 <td>{p.userProfile.fullName}</td>
                 <td>{p.category.name}</td>
                 <td>
-                  <Button>View Post</Button>
+                  <Button onClick={() => navigate(`${[p.id]}`)}>View Post</Button>
                 </td>
               </tr>
             ))}
