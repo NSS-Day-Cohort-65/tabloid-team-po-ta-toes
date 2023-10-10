@@ -82,6 +82,7 @@ public class PostController : ControllerBase
         _dbContext.SaveChanges();
 
         return Created($"/api/post/my-post/{post.Id}", post);
+    }
 
     [HttpDelete("{id}")]
     [Authorize]
