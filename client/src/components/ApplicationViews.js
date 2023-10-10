@@ -8,6 +8,9 @@ import CategoryList from "./categories/CategoryList.js";
 import { PostsAll } from "./posts/PostsAll.js";
 import { ViewAllTags } from "./tags/ViewAllTags";
 import { CreateNewTag } from "./tags/CreateNewTag";
+import { ViewAllTags } from "./ViewAllTags";
+import { PostDetails } from "./posts/PostDetails.js";
+import MyPosts from "./posts/MyPosts";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -46,6 +49,18 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
                 <PostsAll />
+              </AuthorizedRoute>
+            }
+          />
+          <Route path=":id" element={<PostDetails />}></Route>
+          
+        </Route>
+        <Route path="/my-posts">
+          <Route
+            index
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <MyPosts loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }
           />

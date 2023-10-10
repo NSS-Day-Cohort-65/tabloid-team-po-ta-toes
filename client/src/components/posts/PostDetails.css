@@ -1,0 +1,12 @@
+.post-image {
+    width: 50%;
+}
+
+.post-image-col {
+    display: flex;
+    align-items: center;
+}
+.post-content-col {
+    display: flex;
+    align-items: center;
+}
