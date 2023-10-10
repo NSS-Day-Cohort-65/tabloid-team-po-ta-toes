@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { fetchMyPosts } from '../../managers/postManager.js';
 import { Button, Table } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyPosts ({ loggedInUser }) {
     const [posts, setPosts] = useState();
+    const navigate = useNavigate()
 
     const getMyPosts = () => {
       fetchMyPosts(loggedInUser.id).then(setPosts);
@@ -39,6 +41,7 @@ export default function MyPosts ({ loggedInUser }) {
               ))}
             </tbody>
           </Table>
+          <Button onClick={() => navigate("new")}>Create New Post</Button>
         </div>
       </>
     );
