@@ -3,8 +3,10 @@ import { Button, Form, FormGroup, Input, Label, Spinner } from 'reactstrap';
 import { getCategories } from '../../managers/categoryManager.js';
 import { getAllTags } from '../../managers/tagManager.js';
 import { fetchCreateNewPost } from '../../managers/postManager.js';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateNewPost = ({ loggedInUser }) => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState();
   const [tags, setTags] = useState();
   const [newPost, setNewPost] = useState({
@@ -52,29 +54,33 @@ export const CreateNewPost = ({ loggedInUser }) => {
   };
 
   const handleSubmit = () => {
-      if(newPost.title && newPost.content && newPost.tags.length > 0 && newPost.categoryId){
-
-          let convertedTagsToPostTags = []
-          for (const t of newPost.tags) {
-              let newPT = {
-                  tagId: t.id,
-                  tag: t
-              }
-              convertedTagsToPostTags.push(newPT)
-          }
-          let newPostToSubmit = {
-              title: newPost.title,
-              content: newPost.content,
-              imageLocation: newPost.imageLocation,
-              categoryId: newPost.categoryId,
-              postTags: convertedTagsToPostTags,
-              userProfileId: loggedInUser.id
-          }
-          fetchCreateNewPost(newPostToSubmit);
-          
+    if (
+      newPost.title &&
+      newPost.content &&
+      newPost.tags.length > 0 &&
+      newPost.categoryId
+    ) {
+      let convertedTagsToPostTags = [];
+      for (const t of newPost.tags) {
+        let newPT = {
+          tagId: t.id,
+          tag: t,
+        };
+        convertedTagsToPostTags.push(newPT);
       }
-
-  }
+      let newPostToSubmit = {
+        title: newPost.title,
+        content: newPost.content,
+        imageLocation: newPost.imageLocation,
+        categoryId: newPost.categoryId,
+        postTags: convertedTagsToPostTags,
+        userProfileId: loggedInUser.id,
+      };
+      fetchCreateNewPost(newPostToSubmit).then((res) =>
+        navigate(`/posts/${res.id}`)
+      );
+    }
+  };
 
   if (!categories || !tags) {
     return <Spinner />;
@@ -132,18 +138,23 @@ export const CreateNewPost = ({ loggedInUser }) => {
               check
               key={index}
             >
-                <Label>{t.name}</Label>
+              <Label>{t.name}</Label>
               <Input
                 name={t.name}
                 type="checkbox"
                 value={t.Id}
                 onChange={(e) => handleCheck(e, t)}
-                checked={!!newPost.tags.find(tag => tag.id === t.id)}
+                checked={!!newPost.tags.find((tag) => tag.id === t.id)}
               />
             </FormGroup>
           ))}
         </Form>
-        <Button onClick={handleSubmit} color='primary'>Submit</Button>
+        <Button
+          onClick={handleSubmit}
+          color="primary"
+        >
+          Submit
+        </Button>
       </div>
     </>
   );

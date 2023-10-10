@@ -66,6 +66,7 @@ public class PostController : ControllerBase
         post.CreateDateTime = DateTime.Now;
         post.IsApproved = false;
         post.Category = _dbContext.Categories.Single(c => c.Id == post.CategoryId);
+        post.UserProfile = _dbContext.UserProfiles.Single(up => up.Id == post.UserProfileId);
 
         List<PostTag> newPostTags = new List<PostTag>();
 
