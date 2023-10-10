@@ -2,28 +2,36 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCommentsByPostId } from "../../managers/commentManager.js";
 import { Button, Spinner, Table } from "reactstrap";
+import { fetchSinglePost } from '../../managers/postManager.js';
+
 
 export default function CommentList() {
     const { id } = useParams();
     const [comments, setComments] = useState([]);
+    const [post, setPost] = useState();
     const navigate = useNavigate();
 
     const getPostsComments = () => {
         getCommentsByPostId(id).then(setComments);
     };
 
+    const getSinglePost = () => {
+        fetchSinglePost(id).then(setPost);
+      };    
+
     useEffect(() => {
         getPostsComments();
+        getSinglePost();
     }, []);
 
-    if (!comments) {
+    if (!comments || !post) {
         return <Spinner />
     }
 
     return (
         <>
             <div className="container">
-                <h2>Name of Post</h2>
+                <h2>{post.title}</h2>
                 <Table>
                     <thead>
                         <th>Subject</th>
