@@ -11,6 +11,7 @@ import { CreateNewTag } from "./tags/CreateNewTag";
 import { PostDetails } from "./posts/PostDetails.js";
 import MyPosts from "./posts/MyPosts";
 import NewCategoryForm from "./categories/NewCategoryForm.js";
+import { CreateNewPost } from "./posts/CreateNewPost.js";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -29,7 +30,10 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route
             index
             element={
-              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+              <AuthorizedRoute
+                loggedInUser={loggedInUser}
+                roles={['Admin']}
+              >
                 <UserProfileList />
               </AuthorizedRoute>
             }
@@ -37,7 +41,10 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route
             path=":id"
             element={
-              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+              <AuthorizedRoute
+                loggedInUser={loggedInUser}
+                roles={['Admin']}
+              >
                 <UserProfileDetails />
               </AuthorizedRoute>
             }
@@ -52,19 +59,36 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
-          <Route path=":id" element={<PostDetails loggedInUser={loggedInUser}/>}></Route>
-          
+          <Route
+            path=":id"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <PostDetails loggedInUser={loggedInUser} />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path=":id"
+            element={<PostDetails loggedInUser={loggedInUser} />}
+          ></Route>
         </Route>
         <Route path="/my-posts">
           <Route
             index
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <MyPosts loggedInUser={loggedInUser}/>
+                <MyPosts loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />
-          
+          <Route
+            path="new"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CreateNewPost loggedInUser={loggedInUser} />
+              </AuthorizedRoute>
+            }
+          />
         </Route>
         <Route
           path="login"
@@ -75,33 +99,42 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={<Register setLoggedInUser={setLoggedInUser} />}
         />
         <Route
-        path="tags"
-        element={<ViewAllTags/>}
+          path="tags"
+          element={<ViewAllTags />}
         />
         <Route
-        path="tags/create"
-        element={<CreateNewTag/>}
+          path="tags/create"
+          element={<CreateNewTag />}
         />
       </Route>
       <Route path="/categories">
         <Route
-        index
-        element={
-          <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
-            <CategoryList />
-          </AuthorizedRoute>
-        }
+          index
+          element={
+            <AuthorizedRoute
+              loggedInUser={loggedInUser}
+              roles={['Admin']}
+            >
+              <CategoryList />
+            </AuthorizedRoute>
+          }
         />
         <Route
-        path="/categories/create"
-        element={
-          <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
-            <NewCategoryForm />
-          </AuthorizedRoute>
-        }
+          path="/categories/create"
+          element={
+            <AuthorizedRoute
+              loggedInUser={loggedInUser}
+              roles={['Admin']}
+            >
+              <NewCategoryForm />
+            </AuthorizedRoute>
+          }
         />
       </Route>
-      <Route path="*" element={<p>Whoops, nothing here...</p>} />
+      <Route
+        path="*"
+        element={<p>Whoops, nothing here...</p>}
+      />
     </Routes>
   );
 }

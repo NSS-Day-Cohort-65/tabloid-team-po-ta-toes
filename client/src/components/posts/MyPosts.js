@@ -61,6 +61,7 @@ export default function MyPosts ({ loggedInUser }) {
               ))}
             </tbody>
           </Table>
+          <Button onClick={() => navigate("new")}>Create New Post</Button>
           <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>Are you sure you want to delete this Post?</ModalHeader>
             <ModalFooter>

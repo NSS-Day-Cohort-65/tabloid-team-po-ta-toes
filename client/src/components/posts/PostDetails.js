@@ -56,7 +56,16 @@ export const PostDetails = ({ loggedInUser }) => {
       <div className="container">
         <h2>{post.title}</h2>
         <h5>By: {post.userProfile.fullName}</h5>
-        <h6>{dateFormatter(post.publishDateTime)}</h6>
+        {
+          post.publishDateTime === null ?
+
+          <h6>Not yet published</h6>
+
+          :
+
+          <h6>{dateFormatter(post.publishDateTime)}</h6>
+
+        }
         <div className="container">
           <Row>
             <Col className="post-content-col">
