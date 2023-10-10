@@ -8,7 +8,6 @@ import CategoryList from "./categories/CategoryList.js";
 import { PostsAll } from "./posts/PostsAll.js";
 import { ViewAllTags } from "./tags/ViewAllTags";
 import { CreateNewTag } from "./tags/CreateNewTag";
-import { ViewAllTags } from "./ViewAllTags";
 import { PostDetails } from "./posts/PostDetails.js";
 import MyPosts from "./posts/MyPosts";
 import NewCategoryForm from "./categories/NewCategoryForm.js";
