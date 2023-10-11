@@ -40,6 +40,7 @@ public class UserProfileController : ControllerBase
             Email = up.IdentityUser.Email,
             UserName = up.IdentityUser.UserName,
             IdentityUserId = up.IdentityUserId,
+            IsActive = up.IsActive,
             Roles = _dbContext.UserRoles
             .Where(ur => ur.UserId == up.IdentityUserId)
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
@@ -99,5 +100,25 @@ public class UserProfileController : ControllerBase
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
             .ToList();
         return Ok(user);
+    }
+
+    [HttpPost("activate/{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult Activate(int id)
+    {
+        UserProfile foundUser = _dbContext.UserProfiles.SingleOrDefault(up => up.Id == id);
+        foundUser.IsActive = true;
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+    
+    [HttpPost("deactivate/{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult Deactivate(int id)
+    {
+        UserProfile foundUser = _dbContext.UserProfiles.SingleOrDefault(up => up.Id == id);
+        foundUser.IsActive = false;
+        _dbContext.SaveChanges();
+        return NoContent();
     }
 }
