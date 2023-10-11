@@ -35,4 +35,17 @@ public class CommentController : ControllerBase
         }
         return Ok(postComments);
     }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult CreateNewComment(Comment newComment)
+    {
+        newComment.CreateDateTime = DateTime.Now;
+        _dbContext.Comments.Add(newComment);
+        _dbContext.SaveChanges();
+        return Created($"/api/comment/{newComment.Id}", newComment);
+    }
+
+
 }
+
