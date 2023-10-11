@@ -19,6 +19,15 @@ export const fetchCreateNewPost = (post) => {
     body: JSON.stringify(post)
   }).then(res => res.json())
 }
+
+export const fetchEditPost = (id, post) => {
+  return fetch(`${_apiUrl}/my-posts/${id}`, {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(post)
+  })
+}
+
 export const deletePost = (id) => {
   return fetch(`${_apiUrl}/${id}`, {
       method: "DELETE"

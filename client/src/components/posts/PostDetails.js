@@ -97,6 +97,19 @@ export const PostDetails = ({ loggedInUser }) => {
           </Row>
         </div>
         {post.userProfileId === loggedInUser.id ? (
+          
+          <Button
+            color="warning"
+            onClick={() => {
+              navigate(`/my-posts/${post.id}/edit`);
+            }}
+          >
+            Edit
+          </Button>
+        ) : (
+          <></>
+        )}
+        {post.userProfileId === loggedInUser.id ? (
           <>
           <Button
             color="danger"
