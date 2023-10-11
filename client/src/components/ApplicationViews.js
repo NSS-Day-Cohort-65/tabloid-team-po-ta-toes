@@ -74,7 +74,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id/comments"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CommentList />
+                <CommentList loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }
           />

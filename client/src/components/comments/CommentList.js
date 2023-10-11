@@ -5,7 +5,7 @@ import { Button, Modal, ModalFooter, ModalHeader, Spinner, Table } from "reactst
 import { fetchSinglePost } from '../../managers/postManager.js';
 
 
-export default function CommentList() {
+export default function CommentList({ loggedInUser }) {
     const { id } = useParams();
     const [comments, setComments] = useState([]);
     const [post, setPost] = useState();
@@ -60,17 +60,22 @@ export default function CommentList() {
                                 <td>{c.content}</td>
                                 <td>{c.userProfile.identityUser.userName}</td>
                                 <td>{c.createDateTime}</td>
-                                <td>
-                                    <Button color="danger" onClick={() => {
-                                        toggle()
-                                        setCommentId(c.id)
-                                    }}>Delete</Button>
-                                </td>
+                                {c.userProfileId === loggedInUser.id 
+                                ? (
+                                    <td>
+                                        <Button color="danger" onClick={() => {
+                                            toggle()
+                                            setCommentId(c.id)
+                                        }}>Delete</Button>
+                                    </td>
+                                ) : (
+                                    <></>
+                                )}
                             </tr>
                         ))}
-                                <td>
-                                    <Button color="secondary" onClick={() => { navigate(`/posts/${id}`) }}>Return to Post</Button>
-                                </td>
+                        <td>
+                            <Button color="secondary" onClick={() => { navigate(`/posts/${id}`) }}>Return to Post</Button>
+                        </td>
                     </tbody>
                 </Table>
                 <Modal isOpen={modal} toggle={toggle}>
