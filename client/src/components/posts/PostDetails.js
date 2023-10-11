@@ -1,18 +1,10 @@
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { deletePost, fetchSinglePost } from "../../managers/postManager.js";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./PostDetails.css";
 import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from "reactstrap";
-=======
-import { useEffect, useState } from 'react';
-import { deletePost, fetchSinglePost } from '../../managers/postManager.js';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import './PostDetails.css';
-import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from 'reactstrap';
-import { ReactionsPostDetails } from '../reactions/ReactionsPostDetails.js';
-import { createSubscription } from '../../managers/subscriptionManager.js';
-
+import { ReactionsPostDetails } from "../reactions/ReactionsPostDetails.js";
+import { createSubscription } from "../../managers/subscriptionManager.js";
 
 export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
@@ -31,8 +23,7 @@ export const PostDetails = ({ loggedInUser }) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
-    deletePost(post.id)
-      .then(() => navigate("/posts"))
+    deletePost(post.id).then(() => navigate("/posts"));
   };
 
   const handleSubscription = (e) => {
@@ -40,7 +31,7 @@ export const PostDetails = ({ loggedInUser }) => {
 
     let newSubscription = {
       subscriberUserProfileId: loggedInUser.id,
-      providerUserProfileId: parseInt(e.target.value)
+      providerUserProfileId: parseInt(e.target.value),
     };
 
     createSubscription(newSubscription);
@@ -61,9 +52,9 @@ export const PostDetails = ({ loggedInUser }) => {
 
     const formattedDate = `${month.toString().padStart(2, "0")}/${day
       .toString()
-      .padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes
-        .toString()
-        .padStart(2, '0')}`;
+      .padStart(2, "0")}/${year} ${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
 
     return formattedDate;
   };
@@ -74,7 +65,7 @@ export const PostDetails = ({ loggedInUser }) => {
     const estimatedTime = Math.ceil(textWordCount / AvgWPM);
 
     if (estimatedTime === 1) {
-      return "1 min"
+      return "1 min";
     } else {
       return `${estimatedTime} mins`;
     }
@@ -88,8 +79,22 @@ export const PostDetails = ({ loggedInUser }) => {
     <>
       <div className="container">
         <h2>{post.title}</h2>
-        <h5>By: {post.userProfile.fullName}
-          {post.userProfileId === loggedInUser.id ? (<></>) : (<Button color='primary' className="mx-2" size="sm" value={post.userProfileId} onClick={handleSubscription}>Subscribe</Button>)}</h5>
+        <h5>
+          By: {post.userProfile.fullName}
+          {post.userProfileId === loggedInUser.id ? (
+            <></>
+          ) : (
+            <Button
+              color="primary"
+              className="mx-2"
+              size="sm"
+              value={post.userProfileId}
+              onClick={handleSubscription}
+            >
+              Subscribe
+            </Button>
+          )}
+        </h5>
         {post.publishDateTime === null ? (
           <h6>Not yet published</h6>
         ) : (
@@ -112,10 +117,9 @@ export const PostDetails = ({ loggedInUser }) => {
             )}
           </Row>
         </div>
-        <ReactionsPostDetails post={post}/>
-      
-        {post.userProfileId === loggedInUser.id ? (
+        <ReactionsPostDetails post={post} />
 
+        {post.userProfileId === loggedInUser.id ? (
           <Button
             color="warning"
             onClick={() => {
@@ -137,26 +141,22 @@ export const PostDetails = ({ loggedInUser }) => {
             >
               Delete
             </Button>
-
           </>
         ) : (
           <></>
         )}
         <Button
-            className="mx-2"
-            color="primary"
-            onClick={() => {navigate(`/posts/${id}/comments`)}}
-          >
-            View Comments
-          </Button>
-        <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>Add A Comment</Link>
-        <Modal
-          isOpen={modal}
-          toggle={toggle}
->>>>>>> main
+          className="mx-2"
+          color="primary"
+          onClick={() => {
+            navigate(`/posts/${id}/comments`);
+          }}
         >
           View Comments
         </Button>
+        <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>
+          Add A Comment
+        </Link>
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>
             Are you sure you want to delete this Post?
