@@ -63,4 +63,38 @@ public class CommentController : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetCommentById(int id)
+    {
+        Comment comment = _dbContext.Comments
+        .Include(c => c.UserProfile)
+        .Include(c => c.Post)
+        .SingleOrDefault(c => c.Id == id);
+        if (comment == null)
+        {
+            return NotFound();
+        }
+        return Ok(comment);
+    }
+
+    [HttpPost("{id}")]
+    [Authorize]
+    public IActionResult EditComment(int id, Comment comment)
+    {
+        if (comment.Id != id)
+        {
+            return BadRequest();
+        }
+        if (comment == null)
+        {
+            return NotFound();
+        }
+        Comment found = _dbContext.Comments.SingleOrDefault(c => c.Id == id);
+        found.Subject = comment.Subject;
+        found.Content = comment.Content;
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
 }
