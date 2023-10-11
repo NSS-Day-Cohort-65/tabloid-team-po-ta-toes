@@ -13,3 +13,9 @@
 .hide {
     display: none;
 }
+
+.inline-divs {
+    display: flex;
+    gap: 1em;
+
+}

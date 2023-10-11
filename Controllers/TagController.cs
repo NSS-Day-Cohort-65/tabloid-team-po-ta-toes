@@ -23,7 +23,4 @@ public class TagController : ControllerBase
     {
         return Ok(_dbContext.Tags.OrderBy(t => t.Name).ToList());
     }
-
-
-
 }
