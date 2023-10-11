@@ -4,6 +4,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import './PostDetails.css';
 import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { ReactionsPostDetails } from '../reactions/ReactionsPostDetails.js';
+import { createSubscription } from '../../managers/subscriptionManager.js';
+
 
 export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
@@ -23,7 +25,18 @@ export const PostDetails = ({ loggedInUser }) => {
     e.preventDefault();
 
     deletePost(post.id)
-      .then(() =>navigate("/posts"))
+      .then(() => navigate("/posts"))
+  };
+
+  const handleSubscription = (e) => {
+    e.preventDefault();
+
+    let newSubscription = {
+      subscriberUserProfileId: loggedInUser.id,
+      providerUserProfileId: parseInt(e.target.value)
+    };
+
+    createSubscription(newSubscription);
   };
 
   useEffect(() => {
@@ -42,8 +55,8 @@ export const PostDetails = ({ loggedInUser }) => {
     const formattedDate = `${month.toString().padStart(2, '0')}/${day
       .toString()
       .padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes
-      .toString()
-      .padStart(2, '0')}`;
+        .toString()
+        .padStart(2, '0')}`;
 
     return formattedDate;
   };
@@ -53,8 +66,7 @@ export const PostDetails = ({ loggedInUser }) => {
     const textWordCount = text.split(" ").length
     const estimatedTime = Math.ceil(textWordCount / AvgWPM);
 
-    if (estimatedTime === 1)
-    {
+    if (estimatedTime === 1) {
       return "1 min"
     } else {
 
@@ -70,7 +82,8 @@ export const PostDetails = ({ loggedInUser }) => {
     <>
       <div className="container">
         <h2>{post.title}</h2>
-        <h5>By: {post.userProfile.fullName}</h5>
+        <h5>By: {post.userProfile.fullName}
+          {post.userProfileId === loggedInUser.id ? (<></>) : (<Button color='primary' className="mx-2" size="sm" value={post.userProfileId} onClick={handleSubscription}>Subscribe</Button>)}</h5>
         {post.publishDateTime === null ? (
           <h6>Not yet published</h6>
         ) : (
@@ -100,7 +113,7 @@ export const PostDetails = ({ loggedInUser }) => {
         <ReactionsPostDetails post={post}/>
       
         {post.userProfileId === loggedInUser.id ? (
-          
+
           <Button
             color="warning"
             onClick={() => {
@@ -114,26 +127,26 @@ export const PostDetails = ({ loggedInUser }) => {
         )}
         {post.userProfileId === loggedInUser.id ? (
           <>
-          <Button
-            color="danger"
-            onClick={() => {
-              toggle();
-            }}
-          >
-            Delete
-          </Button>
-          
+            <Button
+              color="danger"
+              onClick={() => {
+                toggle();
+              }}
+            >
+              Delete
+            </Button>
+
           </>
         ) : (
           <></>
         )}
         <Button
-            className="mx-2"
-            color="primary"
-            onClick={() => {navigate(`/posts/${id}/comments`)}}
-          >
-            View Comments
-          </Button>
+          className="mx-2"
+          color="primary"
+          onClick={() => { navigate(`/posts/${id}/comments`) }}
+        >
+          View Comments
+        </Button>
         <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>Add A Comment</Link>
         <Modal
           isOpen={modal}
