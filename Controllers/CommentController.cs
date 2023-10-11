@@ -19,7 +19,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpGet("post/{id}")]
-    [Authorize]
+    // [Authorize]
     public IActionResult GetCommentsByPostId(int id)
     {
         List<Comment> postComments = _dbContext

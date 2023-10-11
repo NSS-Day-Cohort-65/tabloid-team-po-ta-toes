@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Tabloid.Data;
 using Tabloid.Models;
 
@@ -17,7 +18,7 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    // [Authorize]
     public IActionResult GetAllApprovedAndPublishedPosts()
     {
         return Ok(_dbContext.Posts
@@ -32,20 +33,60 @@ public class PostController : ControllerBase
 
 
     [HttpGet("{id}")]
-    [Authorize]
-    public IActionResult GetSinglePost(int id)
+    // [Authorize]
+    public IActionResult GetSinglePost(int id, int userId)
     {
         Post post = _dbContext.Posts
         .Include(p => p.Category)
         .Include(p => p.UserProfile)
         .Include(p => p.PostTags)
         .ThenInclude(pt => pt.Tag)
+        .Include(p => p.PostReactions)
+        .ThenInclude(pr => pr.Reaction)
+        .Include(p => p.PostReactions)
+        .ThenInclude(pr => pr.UserProfile)
         .SingleOrDefault(p => p.Id == id);
 
         if (post == null)
         {
             return NotFound();
         }
+
+        //reaction id, count
+        Dictionary<int, int> reactionCounts = new Dictionary<int, int>();
+        foreach (PostReaction pr in post.PostReactions)
+        {
+            int key = pr.ReactionId;
+            int currentCount;
+            reactionCounts.TryGetValue(key, out currentCount);
+            if (reactionCounts.ContainsKey(key))
+            {
+                reactionCounts[key] = currentCount + 1;
+            }
+            else
+            {
+                reactionCounts.Add(key, 1);
+            }
+        }
+
+        List<PostReactionDTO> PrDTOs = new List<PostReactionDTO>();
+
+        foreach (KeyValuePair<int, int> entry in reactionCounts)
+        {
+            PostReactionDTO prDTO = new PostReactionDTO
+            {
+                Name = _dbContext.Reactions.Single(r => r.Id == entry.Key).Name,
+                ImageLocation = _dbContext.Reactions.Single(r => r.Id == entry.Key).ImageLocation,
+                Count = entry.Value,
+                ReactedByCurrentUser = _dbContext.PostReactions.Where(pr => pr.ReactionId == entry.Key).Any(pr => pr.UserProfileId == userId),
+                Reaction = _dbContext.Reactions.Single(r => r.Id == entry.Key)
+
+            };
+
+            PrDTOs.Add(prDTO);
+        }
+
+        post.PostReactionDTOs = PrDTOs; 
 
         return Ok(post);
     }
