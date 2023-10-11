@@ -106,18 +106,19 @@ export const PostDetails = ({ loggedInUser }) => {
           >
             Delete
           </Button>
-          <Button
+          
+          </>
+        ) : (
+          <></>
+        )}
+        <Button
             className="mx-2"
             color="primary"
             onClick={() => {navigate(`/posts/${id}/comments`)}}
           >
             View Comments
           </Button>
-          <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>Add A Comment</Link>
-          </>
-        ) : (
-          <></>
-        )}
+        <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>Add A Comment</Link>
         <Modal
           isOpen={modal}
           toggle={toggle}
