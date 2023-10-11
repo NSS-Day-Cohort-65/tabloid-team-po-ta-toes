@@ -15,6 +15,9 @@ import EditCategoryForm from "./categories/EditCategoryForm.js";
 import { CreateNewPost } from "./posts/CreateNewPost.js";
 import { EditPost } from "./posts/EditPost.js";
 import CommentList from "./comments/CommentList.js";
+import CreateComment from "./comments/CreateComment";
+import { CreateReaction } from "./reactions/CreateReaction";
+
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -63,6 +66,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             }
           />
           <Route
+            path=":id/newcomment"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CreateComment loggedInUser={loggedInUser} />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
             path=":id"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
@@ -74,7 +85,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id/comments"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CommentList />
+                <CommentList loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }
           />
@@ -162,6 +173,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           }
         />
       </Route>
+      <Route
+          path="/reactions"
+          element={
+            <AuthorizedRoute
+              loggedInUser={loggedInUser}
+              roles={['Admin']}
+            >
+              <CreateReaction />
+            </AuthorizedRoute>
+          }
+        />
       <Route
         path="*"
         element={<p>Whoops, nothing here...</p>}
