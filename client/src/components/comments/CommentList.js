@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCommentsByPostId } from "../../managers/commentManager.js";
-import { Button, Spinner, Table } from "reactstrap";
+import { deleteComment, getCommentsByPostId } from "../../managers/commentManager.js";
+import { Button, Modal, ModalFooter, ModalHeader, Spinner, Table } from "reactstrap";
 import { fetchSinglePost } from '../../managers/postManager.js';
 
 
@@ -9,15 +9,29 @@ export default function CommentList() {
     const { id } = useParams();
     const [comments, setComments] = useState([]);
     const [post, setPost] = useState();
+    const [modal, setModal] = useState(false);
+    const [commentId, setCommentId] = useState(0);
     const navigate = useNavigate();
 
     const getPostsComments = () => {
         getCommentsByPostId(id).then(setComments);
     };
 
+    const toggle = () => {
+        setModal(!modal);
+    };
+
     const getSinglePost = () => {
         fetchSinglePost(id).then(setPost);
-      };    
+    };
+
+    const handleDelete = (e, id) => {
+        e.preventDefault();
+
+        deleteComment(id)
+            .then(() => getPostsComments())
+    };
+
 
     useEffect(() => {
         getPostsComments();
@@ -41,22 +55,41 @@ export default function CommentList() {
                     </thead>
                     <tbody>
                         {comments.map((c) => (
-                            <>
-                                <tr>
-                                    <td key={c.id}>
-                                        <td>{c.subject}</td>
-                                        <td>{c.content}</td>
-                                        <td>{c.userProfile.identityUser.userName}</td>
-                                        <td>{c.createDateTime}</td>
-                                    </td>
-                                </tr>
-                            </>
+                            <tr key={c.id}>
+                                <td>{c.subject}</td>
+                                <td>{c.content}</td>
+                                <td>{c.userProfile.identityUser.userName}</td>
+                                <td>{c.createDateTime}</td>
+                                <td>
+                                    <Button onClick={() => { navigate(`/posts/${id}`) }}>Return to Post</Button>
+                                </td>
+                                <td>
+                                    <Button color="danger" onClick={() => {
+                                        toggle()
+                                        setCommentId(c.id)
+                                    }}>Delete</Button>
+                                </td>
+                            </tr>
                         ))}
-                        <td>
-                            <Button onClick={() => { navigate(`/posts/${id}`) }}>Return to Post</Button>
-                        </td>
                     </tbody>
                 </Table>
+                <Modal isOpen={modal} toggle={toggle}>
+                    <ModalHeader toggle={toggle}>Are you sure you want to delete this comment?</ModalHeader>
+                    <ModalFooter>
+                        <Button color="danger" onClick={(e) => {
+                            toggle()
+                            handleDelete(e, commentId)
+                        }}>
+                            Confirm Deletion
+                        </Button>{' '}
+                        <Button color="primary" onClick={() => {
+                            toggle()
+                            setCommentId(0)
+                        }}>
+                            Cancel
+                        </Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         </>
     )
