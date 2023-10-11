@@ -61,9 +61,6 @@ export default function CommentList() {
                                 <td>{c.userProfile.identityUser.userName}</td>
                                 <td>{c.createDateTime}</td>
                                 <td>
-                                    <Button onClick={() => { navigate(`/posts/${id}`) }}>Return to Post</Button>
-                                </td>
-                                <td>
                                     <Button color="danger" onClick={() => {
                                         toggle()
                                         setCommentId(c.id)
@@ -71,6 +68,9 @@ export default function CommentList() {
                                 </td>
                             </tr>
                         ))}
+                                <td>
+                                    <Button color="secondary" onClick={() => { navigate(`/posts/${id}`) }}>Return to Post</Button>
+                                </td>
                     </tbody>
                 </Table>
                 <Modal isOpen={modal} toggle={toggle}>
