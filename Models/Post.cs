@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tabloid.Models;
 
@@ -18,5 +19,8 @@ public class Post
     public int UserProfileId { get; set;}
     public UserProfile UserProfile { get; set;}
     public List<PostTag> PostTags { get; set;}
+    public List<PostReaction> PostReactions { get; set;}
+    [NotMapped]
+    public List<PostReactionDTO> PostReactionDTOs { get; set; }
 
 }
