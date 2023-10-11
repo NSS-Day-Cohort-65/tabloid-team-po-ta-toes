@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { deletePost, fetchSinglePost } from '../../managers/postManager.js';
-import { useNavigate, useParams } from 'react-router-dom';
-import './PostDetails.css';
-import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import { useEffect, useState } from "react";
+import { deletePost, fetchSinglePost } from "../../managers/postManager.js";
+import { useNavigate, useParams } from "react-router-dom";
+import "./PostDetails.css";
+import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from "reactstrap";
 
 export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
@@ -21,8 +21,7 @@ export const PostDetails = ({ loggedInUser }) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
-    deletePost(post.id)
-      .then(() =>navigate("/posts"))
+    deletePost(post.id).then(() => navigate("/posts"));
   };
 
   useEffect(() => {
@@ -38,28 +37,26 @@ export const PostDetails = ({ loggedInUser }) => {
     const hours = parsedDate.getHours();
     const minutes = parsedDate.getMinutes();
 
-    const formattedDate = `${month.toString().padStart(2, '0')}/${day
+    const formattedDate = `${month.toString().padStart(2, "0")}/${day
       .toString()
-      .padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes
+      .padStart(2, "0")}/${year} ${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, '0')}`;
+      .padStart(2, "0")}`;
 
     return formattedDate;
   };
 
   const readTimeEstimator = (text) => {
     const AvgWPM = 265;
-    const textWordCount = text.split(" ").length
+    const textWordCount = text.split(" ").length;
     const estimatedTime = Math.ceil(textWordCount / AvgWPM);
 
-    if (estimatedTime === 1)
-    {
-      return "1 min"
+    if (estimatedTime === 1) {
+      return "1 min";
     } else {
-
       return `${estimatedTime} mins`;
     }
-  }
+  };
 
   if (!post) {
     return null;
@@ -85,55 +82,37 @@ export const PostDetails = ({ loggedInUser }) => {
             </Col>
             {post.imageLocation ? (
               <Col className="post-image-col">
-                <img
-                  className="post-image"
-                  src={post.imageLocation}
-                  alt=""
-                />
+                <img className="post-image" src={post.imageLocation} alt="" />
               </Col>
             ) : (
-              ''
+              ""
             )}
           </Row>
         </div>
         {post.userProfileId === loggedInUser.id ? (
-          
-          <Button
-            color="warning"
-            onClick={() => {
-              navigate(`/my-posts/${post.id}/edit`);
-            }}
-          >
-            Edit
-          </Button>
-        ) : (
-          <></>
-        )}
-        {post.userProfileId === loggedInUser.id ? (
           <>
-          <Button
-            color="danger"
-            onClick={() => {
-              toggle();
-            }}
-          >
-            Delete
-          </Button>
-          <Button
-            className="mx-2"
-            color="primary"
-            onClick={() => {navigate(`/posts/${id}/comments`)}}
-          >
-            View Comments
-          </Button>
+            <Button
+              color="danger"
+              onClick={() => {
+                toggle();
+              }}
+            >
+              Delete
+            </Button>
           </>
         ) : (
           <></>
         )}
-        <Modal
-          isOpen={modal}
-          toggle={toggle}
+        <Button
+          className="mx-2"
+          color="primary"
+          onClick={() => {
+            navigate(`/posts/${id}/comments`);
+          }}
         >
+          View Comments
+        </Button>
+        <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>
             Are you sure you want to delete this Post?
           </ModalHeader>
@@ -146,7 +125,7 @@ export const PostDetails = ({ loggedInUser }) => {
               }}
             >
               Confirm Deletion
-            </Button>{' '}
+            </Button>{" "}
             <Button
               color="primary"
               onClick={() => {
