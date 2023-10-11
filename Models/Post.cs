@@ -18,4 +18,5 @@ public class Post
     public int UserProfileId { get; set; }
     public UserProfile UserProfile { get; set; }
     public List<PostTag> PostTags { get; set; }
+
 }

@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
-import { fetchSinglePost } from "../../managers/postManager.js";
-import { useParams } from "react-router-dom";
+import { deletePost, fetchSinglePost } from "../../managers/postManager.js";
+import { useNavigate, useParams } from "react-router-dom";
 import "./PostDetails.css";
-import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
+import {
+  Button,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+  Modal,
+  ModalFooter,
+  ModalHeader,
+} from "reactstrap";
 import { getAllTags } from "../../managers/tagManager.js";
 import {
   EditPostTags,
@@ -10,9 +20,11 @@ import {
   getPostTags,
 } from "../../managers/postTagManager.js";
 
-export const PostDetails = () => {
+export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
+  const [modal, setModal] = useState(false);
   const [tagList, setTagList] = useState();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [viewTags, setViewTags] = useState(false);
   const [postTagList, setPostTagList] = useState();
@@ -20,6 +32,16 @@ export const PostDetails = () => {
 
   const getSinglePost = () => {
     fetchSinglePost(id).then(setPost);
+  };
+
+  const toggle = () => {
+    setModal(!modal);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    deletePost(post.id).then(() => navigate("/posts"));
   };
 
   useEffect(() => {
@@ -74,6 +96,18 @@ export const PostDetails = () => {
     });
   };
 
+  const readTimeEstimator = (text) => {
+    const AvgWPM = 265;
+    const textWordCount = text.split(" ").length;
+    const estimatedTime = Math.ceil(textWordCount / AvgWPM);
+
+    if (estimatedTime === 1) {
+      return "1 min";
+    } else {
+      return `${estimatedTime} mins`;
+    }
+  };
+
   if (!post || !tagList) {
     return null;
   }
@@ -82,8 +116,15 @@ export const PostDetails = () => {
     <>
       <div className="container">
         <h2>{post.title}</h2>
-        <h5>By: {post.userProfile?.fullName}</h5>
-        <h6>{dateFormatter(post.publishDateTime)}</h6>
+        <h5>By: {post.userProfile.fullName}</h5>
+        {post.publishDateTime === null ? (
+          <h6>Not yet published</h6>
+        ) : (
+          <h6>{dateFormatter(post.publishDateTime)}</h6>
+        )}
+        <p>
+          <i>Estimated reading time: {readTimeEstimator(post.content)}</i>
+        </p>
         <div className="container">
           <Row>
             <Col className="post-content-col">
@@ -131,6 +172,53 @@ export const PostDetails = () => {
             </Button>
           </div>
         </div>
+        {post.userProfileId === loggedInUser.id ? (
+          <>
+            <Button
+              color="danger"
+              onClick={() => {
+                toggle();
+              }}
+            >
+              Delete
+            </Button>
+            <Button
+              className="mx-2"
+              color="primary"
+              onClick={() => {
+                navigate(`/posts/${id}/comments`);
+              }}
+            >
+              View Comments
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>
+            Are you sure you want to delete this Post?
+          </ModalHeader>
+          <ModalFooter>
+            <Button
+              color="danger"
+              onClick={(e) => {
+                toggle();
+                handleDelete(e);
+              }}
+            >
+              Confirm Deletion
+            </Button>{" "}
+            <Button
+              color="primary"
+              onClick={() => {
+                toggle();
+              }}
+            >
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </>
   );

@@ -60,4 +60,46 @@ public class PostController : ControllerBase
         .ToList());
 
     }
+
+    [HttpPost("my-posts")]
+    [Authorize]
+    public IActionResult CreateNewPost(Post post)
+    {
+        post.CreateDateTime = DateTime.Now;
+        post.IsApproved = false;
+        post.Category = _dbContext.Categories.Single(c => c.Id == post.CategoryId);
+        post.UserProfile = _dbContext.UserProfiles.Single(up => up.Id == post.UserProfileId);
+
+        List<PostTag> newPostTags = new List<PostTag>();
+
+        foreach (PostTag pt in post.PostTags)
+        {
+            pt.Tag = _dbContext.Tags.Single(t => t.Id == pt.TagId);
+            newPostTags.Add(pt);
+        }
+
+        post.PostTags = newPostTags;
+
+        _dbContext.Posts.Add(post);
+        _dbContext.SaveChanges();
+
+        return Created($"/api/post/my-post/{post.Id}", post);
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult DeletePost(int id) 
+    {
+        Post PostToDelete = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+
+        if (PostToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Remove(PostToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }

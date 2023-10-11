@@ -11,3 +11,16 @@ export const fetchSinglePost = (id) => {
 export const fetchMyPosts = (userId) => {
   return fetch(`${_apiUrl}/my-posts/${userId}`).then((res) => res.json());
 };
+
+export const fetchCreateNewPost = (post) => {
+  return fetch(`${_apiUrl}/my-posts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(post),
+  }).then((res) => res.json());
+};
+export const deletePost = (id) => {
+  return fetch(`${_apiUrl}/${id}`, {
+    method: "DELETE",
+  });
+};
