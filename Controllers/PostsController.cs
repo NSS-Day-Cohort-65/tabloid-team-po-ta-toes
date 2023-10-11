@@ -23,6 +23,8 @@ public class PostController : ControllerBase
         return Ok(_dbContext.Posts
         .Include(p => p.Category)
         .Include(p => p.UserProfile)
+        .Include(p => p.PostTags)
+        .ThenInclude(pt => pt.Tag)
         .Where(p => p.IsApproved == true && p.PublishDateTime < DateTime.Now)
         .OrderBy(p => p.PublishDateTime)
         .ToList());
@@ -36,6 +38,8 @@ public class PostController : ControllerBase
         Post post = _dbContext.Posts
         .Include(p => p.Category)
         .Include(p => p.UserProfile)
+        .Include(p => p.PostTags)
+        .ThenInclude(pt => pt.Tag)
         .SingleOrDefault(p => p.Id == id);
 
         if (post == null)
@@ -82,6 +86,41 @@ public class PostController : ControllerBase
         _dbContext.SaveChanges();
 
         return Created($"/api/post/my-post/{post.Id}", post);
+    }
+
+    [HttpPut("my-posts/{id}")]
+    [Authorize]
+    public IActionResult EditPost(int id, Post post)
+    {
+        Post postToEdit = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        if (postToEdit == null)
+        {
+            return NotFound();
+        }
+
+        postToEdit.Title = post.Title;
+        postToEdit.Content = post.Content;
+        postToEdit.ImageLocation = post.ImageLocation;
+
+        postToEdit.Category = _dbContext.Categories.Single(c => c.Id == post.CategoryId);
+
+        List<PostTag> postTagsToRemove = _dbContext.PostTags.Where(pt => pt.PostId != post.Id).ToList();
+
+        _dbContext.PostTags.RemoveRange(postTagsToRemove);
+
+        List<PostTag> newPostTags = new List<PostTag>();
+
+        foreach (PostTag pt in post.PostTags)
+        {
+            pt.Tag = _dbContext.Tags.Single(t => t.Id == pt.TagId);
+            newPostTags.Add(pt);
+        }
+
+        postToEdit.PostTags = newPostTags;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
     }
 
     [HttpDelete("{id}")]

@@ -42,6 +42,8 @@ export default function MyPosts ({ loggedInUser }) {
               <th>Title</th>
               <th>Category</th>
               <th></th>
+              <th></th>
+              <th></th>
             </thead>
             <tbody>
               {posts.map((p, index) => (
@@ -49,7 +51,10 @@ export default function MyPosts ({ loggedInUser }) {
                   <td>{p.title}</td>
                   <td>{p.category.name}</td>
                   <td>
-                    <Button onClick={() => navigate(`/posts/${p.id}`)}>View Post</Button>
+                    <Button color="primary" onClick={() => navigate(`/posts/${p.id}`)}>View Post</Button>
+                  </td>
+                  <td>
+                    <Button color="warning" onClick={() => navigate(`/my-posts/${p.id}/edit`)}>Edit Post</Button>
                   </td>
                   <td>
                     <Button color="danger" onClick={() => {

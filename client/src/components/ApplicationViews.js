@@ -13,6 +13,7 @@ import MyPosts from "./posts/MyPosts";
 import NewCategoryForm from "./categories/NewCategoryForm.js";
 import EditCategoryForm from "./categories/EditCategoryForm.js";
 import { CreateNewPost } from "./posts/CreateNewPost.js";
+import { EditPost } from "./posts/EditPost.js";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -90,6 +91,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
+          <Route
+            path=":id/edit"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <EditPost loggedInUser={loggedInUser}/>
+              </AuthorizedRoute>
+            }
+          />
         </Route>
         <Route
           path="login"
@@ -132,12 +141,15 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           }
         />
         <Route
-        path="/categories/:id/edit"
-        element={
-          <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
-            <EditCategoryForm />
-          </AuthorizedRoute>
-        }
+          path="/categories/:id/edit"
+          element={
+            <AuthorizedRoute
+              loggedInUser={loggedInUser}
+              roles={['Admin']}
+            >
+              <EditCategoryForm />
+            </AuthorizedRoute>
+          }
         />
       </Route>
       <Route
