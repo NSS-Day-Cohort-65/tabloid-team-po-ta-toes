@@ -14,7 +14,7 @@ export default function EditCategoryForm() {
 
   const clone = structuredClone(category)
   const setName = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     clone.name = e.target.value;
   }
 
