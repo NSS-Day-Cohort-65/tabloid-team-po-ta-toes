@@ -236,6 +236,27 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
                 PostId = 1,
                 ReactionId = 2,
                 UserProfileId = 2
+            },
+            new PostReaction
+            {
+                Id = 3,
+                PostId = 1,
+                ReactionId = 2,
+                UserProfileId = 4
+            },
+            new PostReaction
+            {
+                Id = 4,
+                PostId = 1,
+                ReactionId = 1,
+                UserProfileId = 5
+            },
+            new PostReaction
+            {
+                Id = 5,
+                PostId = 1,
+                ReactionId = 1,
+                UserProfileId = 6
             }
         });
         modelBuilder.Entity<PostTag>().HasData(new PostTag[]

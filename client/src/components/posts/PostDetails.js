@@ -3,6 +3,7 @@ import { deletePost, fetchSinglePost } from '../../managers/postManager.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import './PostDetails.css';
 import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import { ReactionsPostDetails } from '../reactions/ReactionsPostDetails.js';
 
 export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
@@ -11,7 +12,7 @@ export const PostDetails = ({ loggedInUser }) => {
   const { id } = useParams();
 
   const getSinglePost = () => {
-    fetchSinglePost(id).then(setPost);
+    fetchSinglePost(id, loggedInUser.id).then(setPost);
   };
 
   const toggle = () => {
@@ -96,6 +97,8 @@ export const PostDetails = ({ loggedInUser }) => {
             )}
           </Row>
         </div>
+        <ReactionsPostDetails post={post}/>
+      
         {post.userProfileId === loggedInUser.id ? (
           
           <Button

@@ -203,6 +203,7 @@ namespace Tabloid.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ImageLocation = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     IdentityUserId = table.Column<string>(type: "text", nullable: true)
@@ -368,19 +369,19 @@ namespace Tabloid.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c3aaeb97-d2ba-4a53-a521-4eea61e59b35", "2446f517-6f54-4304-9da1-df01e3ed71c0", "Admin", "admin" });
+                values: new object[] { "c3aaeb97-d2ba-4a53-a521-4eea61e59b35", "93953164-1e83-4233-8d5a-ee7b75bb8f5a", "Admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "9ce89d88-75da-4a80-9b0d-3fe58582b8e2", 0, "a1f70569-2760-496e-aaf4-57bf92ab422d", "bob@williams.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEDR8LWKzMFkTkiTvuzRgCTMdbk9Z8jC5X+21MB+ivFG3ktQxv3bSIJy4GYRogv4wGg==", null, false, "196df3fe-eef1-4f21-83bf-d98fc5af8968", false, "BobWilliams" },
-                    { "a7d21fac-3b21-454a-a747-075f072d0cf3", 0, "c3bee671-8882-4027-8f58-934ee55ce583", "jane@smith.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEI7YeAxhUsM8DH43rDAW7E8bAEsykNwYAt+v7vDtICtI/vQD068Oq9JNPOSaHqJ/sg==", null, false, "82212a1d-4fc1-4838-a2da-50ef08916632", false, "JaneSmith" },
-                    { "c806cfae-bda9-47c5-8473-dd52fd056a9b", 0, "2c566a10-6b67-4db4-9d12-807ba933926b", "alice@johnson.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEG5VCkqJnjGkKZbAO8Iaylo3+7Nl17aqbGzeaHYwZmBGF5R5kupt/Xja+1ZbvZNrqA==", null, false, "a6a45e60-9d8b-4a54-83d8-ed5066c08e8a", false, "AliceJohnson" },
-                    { "d224a03d-bf0c-4a05-b728-e3521e45d74d", 0, "c06a2ae9-5a18-4dbb-ad53-7791b36fdd6c", "Eve@Davis.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEEDPy0FiYa5HiIgShm/Hact6kJqvkvjqQb+u6TiQmh2FJ4t3W8kkUzsCptMYa1YmZg==", null, false, "bd213f25-0958-4bec-a158-7ecefe001cf8", false, "EveDavis" },
-                    { "d8d76512-74f1-43bb-b1fd-87d3a8aa36df", 0, "c23c0418-e8d9-4a81-9284-689671c1a1d4", "john@doe.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAECSEG2yFSWoJmfnG7sCTpRXGD/5ycdTTAC7mwzv5ndM+ucacenuhk/CFIDmcm/EDMQ==", null, false, "0bcaed41-8d0f-4c5c-9717-6be2e9e8154b", false, "JohnDoe" },
-                    { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "8b35d8d3-67f9-4d8a-ab5c-59f82be03b2a", "admina@strator.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAECr3j1u7p3gXk/DCYo/7u40YkU1f8YwbXHtfGeeWxeyk1WW1uFbqI9guCm+F4zZJfQ==", null, false, "03d67a4f-f672-4071-9dfd-37b0870d0dbd", false, "Administrator" }
+                    { "9ce89d88-75da-4a80-9b0d-3fe58582b8e2", 0, "0fb18839-a4f3-4ecc-84a7-1ff6d75e5cc5", "bob@williams.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEMR7DIDQzuAGV/SKzK9TYXlXQH2xOoXlo2W3laiBKEh3mFStwLhxKcYp8ceSiu61kQ==", null, false, "9735351a-6e1c-46ac-bcb2-604f1c4a607e", false, "BobWilliams" },
+                    { "a7d21fac-3b21-454a-a747-075f072d0cf3", 0, "3cdb4bb9-b489-4cf5-a28b-a2534a5560ca", "jane@smith.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEJXnmkvKm0gUNTxtOqJbyl4Fmo2skh3W5zPvsER5/nU89b4Yt1yEDZtICL37amkiwA==", null, false, "043863b4-1e8f-4584-9406-07365656d8c9", false, "JaneSmith" },
+                    { "c806cfae-bda9-47c5-8473-dd52fd056a9b", 0, "a5a2c5d5-6e87-4404-9233-30f04877a824", "alice@johnson.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAELNki/p/LINY1zI1S4CjPNWSNslfleAa40GZOvv81H3LeusaoDUg5gTZxenFEO0ybA==", null, false, "40422cb0-f079-4967-a25b-382fa4d70032", false, "AliceJohnson" },
+                    { "d224a03d-bf0c-4a05-b728-e3521e45d74d", 0, "e0b742a9-f8f8-4fe2-9ab4-c28467f62a82", "Eve@Davis.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAENhNm0RCSTViaIlF+GrQb1DbFXo1MAaWngGM94DJaD2HIrFK+yu3l4nei2p4cxa9kQ==", null, false, "d2f4699c-467d-4722-882c-51fe47e39e45", false, "EveDavis" },
+                    { "d8d76512-74f1-43bb-b1fd-87d3a8aa36df", 0, "648dbf9b-aee5-4024-9963-07381f582a6d", "john@doe.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAEJ7CRJ+pqMpD7m7ReXdeW36CoWOfH8MwAQ28342rVSRk+q3lXoRKdne2ruxOhDp66w==", null, false, "a868bd17-8d58-4490-8769-a884c46ca120", false, "JohnDoe" },
+                    { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "a27716fb-bbef-4d66-a822-1499a9c3d932", "admina@strator.comx", false, false, null, null, null, "AQAAAAEAACcQAAAAECW4jLuP629q/nY5c2ieGSXPUi7jnx50crB98BTWw0yJSCltn8B0M0vvvE0kLOT/Ng==", null, false, "9cee088c-34d4-4ad6-a4ee-36453120bf59", false, "Administrator" }
                 });
 
             migrationBuilder.InsertData(
@@ -423,15 +424,15 @@ namespace Tabloid.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserProfiles",
-                columns: new[] { "Id", "CreateDateTime", "FirstName", "IdentityUserId", "ImageLocation", "LastName" },
+                columns: new[] { "Id", "CreateDateTime", "FirstName", "IdentityUserId", "ImageLocation", "IsActive", "LastName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Admina", "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", "https://robohash.org/numquamutut.png?size=150x150&set=set1", "Strator" },
-                    { 2, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "John", "d8d76512-74f1-43bb-b1fd-87d3a8aa36df", "https://robohash.org/nisiautemet.png?size=150x150&set=set1", "Doe" },
-                    { 3, new DateTime(2022, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jane", "a7d21fac-3b21-454a-a747-075f072d0cf3", "https://robohash.org/molestiaemagnamet.png?size=150x150&set=set1", "Smith" },
-                    { 4, new DateTime(2023, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alice", "c806cfae-bda9-47c5-8473-dd52fd056a9b", "https://robohash.org/deseruntutipsum.png?size=150x150&set=set1", "Johnson" },
-                    { 5, new DateTime(2023, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bob", "9ce89d88-75da-4a80-9b0d-3fe58582b8e2", "https://robohash.org/quiundedignissimos.png?size=150x150&set=set1", "Williams" },
-                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "Eve", "d224a03d-bf0c-4a05-b728-e3521e45d74d", "https://robohash.org/hicnihilipsa.png?size=150x150&set=set1", "Davis" }
+                    { 1, new DateTime(2022, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Admina", "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", "https://robohash.org/numquamutut.png?size=150x150&set=set1", false, "Strator" },
+                    { 2, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "John", "d8d76512-74f1-43bb-b1fd-87d3a8aa36df", "https://robohash.org/nisiautemet.png?size=150x150&set=set1", false, "Doe" },
+                    { 3, new DateTime(2022, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jane", "a7d21fac-3b21-454a-a747-075f072d0cf3", "https://robohash.org/molestiaemagnamet.png?size=150x150&set=set1", false, "Smith" },
+                    { 4, new DateTime(2023, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alice", "c806cfae-bda9-47c5-8473-dd52fd056a9b", "https://robohash.org/deseruntutipsum.png?size=150x150&set=set1", false, "Johnson" },
+                    { 5, new DateTime(2023, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bob", "9ce89d88-75da-4a80-9b0d-3fe58582b8e2", "https://robohash.org/quiundedignissimos.png?size=150x150&set=set1", false, "Williams" },
+                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "Eve", "d224a03d-bf0c-4a05-b728-e3521e45d74d", "https://robohash.org/hicnihilipsa.png?size=150x150&set=set1", false, "Davis" }
                 });
 
             migrationBuilder.InsertData(
@@ -467,7 +468,10 @@ namespace Tabloid.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 1, 3 },
-                    { 2, 1, 2, 2 }
+                    { 2, 1, 2, 2 },
+                    { 3, 1, 2, 4 },
+                    { 4, 1, 1, 5 },
+                    { 5, 1, 1, 6 }
                 });
 
             migrationBuilder.InsertData(

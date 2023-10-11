@@ -20,6 +20,8 @@ public class UserProfile
 
     [NotMapped]
     public string Email { get; set; }
+    
+    public bool IsActive { get; set; }
 
     public DateTime CreateDateTime { get; set; }
 
