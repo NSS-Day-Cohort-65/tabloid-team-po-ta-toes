@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { deletePost, fetchSinglePost } from '../../managers/postManager.js';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import './PostDetails.css';
 import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from 'reactstrap';
 
@@ -119,17 +119,19 @@ export const PostDetails = ({ loggedInUser }) => {
           >
             Delete
           </Button>
-          <Button
+          
+          </>
+        ) : (
+          <></>
+        )}
+        <Button
             className="mx-2"
             color="primary"
             onClick={() => {navigate(`/posts/${id}/comments`)}}
           >
             View Comments
           </Button>
-          </>
-        ) : (
-          <></>
-        )}
+        <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>Add A Comment</Link>
         <Modal
           isOpen={modal}
           toggle={toggle}

@@ -15,6 +15,8 @@ import EditCategoryForm from "./categories/EditCategoryForm.js";
 import { CreateNewPost } from "./posts/CreateNewPost.js";
 import { EditPost } from "./posts/EditPost.js";
 import CommentList from "./comments/CommentList.js";
+import CreateComment from "./comments/CreateComment";
+
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -59,6 +61,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
                 <PostsAll />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path=":id/newcomment"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CreateComment loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />
