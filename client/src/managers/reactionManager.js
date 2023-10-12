@@ -5,6 +5,10 @@ export const getReactions = () => {
     return fetch(`${_apiUrl}`).then(res => res.json());
 }
 
+export const getUnusedReactions = (postId) => {
+    return fetch(`${_apiUrl}/unused/${postId}`).then(res => res.json());
+}
+
 export const createNewReaction = (newReaction) => {
     return fetch(`${_apiUrl}`, {
         method: "POST",
