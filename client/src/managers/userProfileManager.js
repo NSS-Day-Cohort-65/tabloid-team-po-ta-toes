@@ -10,12 +10,12 @@ export const getProfile = (id) => {
 
 export const deactivateUser = (id) => {
   return fetch(_apiUrl + `/deactivate/${id}`, {
-    method: "POST"
-  })
+    method: "POST",
+  });
 };
 
 export const reactivateUser = (id) => {
   return fetch(_apiUrl + `/activate/${id}`, {
-    method: "POST"
-  })
+    method: "POST",
+  });
 };
