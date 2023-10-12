@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
-import { approvePost, fetchAllPosts, fetchAllPostsForAdmin, unapprovePost } from '../../managers/postManager.js';
-import { Button, Table } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { fetchAllPosts } from "../../managers/postManager.js";
+import { Button, Table } from "reactstrap";
+import { useNavigate } from "react-router-dom";
+import { FilterPostsByTag } from "../tags/FilterPostsByTag.js";
+import { approvePost, fetchAllPostsForAdmin, unapprovePost } from '../../managers/postManager.js';
+
 
 export const PostsAll = ({ loggedInUser }) => {
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
   const navigate = useNavigate()
 
   const getAllPosts = () => {
@@ -55,6 +58,7 @@ export const PostsAll = ({ loggedInUser }) => {
     <>
       <div className="container">
         <h2>All Posts</h2>
+        <FilterPostsByTag posts={posts} setPosts={setPosts} getAllPosts={getAllPosts} />
         <Table>
           <thead>
             <th>Title</th>
@@ -69,7 +73,9 @@ export const PostsAll = ({ loggedInUser }) => {
                 <td>{p.userProfile.fullName}</td>
                 <td>{p.category.name}</td>
                 <td>
-                  <Button onClick={() => navigate(`${[p.id]}`)}>View Post</Button>
+                  <Button onClick={() => navigate(`${[p.id]}`)}>
+                    View Post
+                  </Button>
                 </td>
                 {
                   loggedInUser?.roles?.includes("Admin") 
@@ -80,6 +86,7 @@ export const PostsAll = ({ loggedInUser }) => {
             ))}
           </tbody>
         </Table>
+        {posts.length === 0 && "No Posts Match!"}
       </div>
     </>
   );

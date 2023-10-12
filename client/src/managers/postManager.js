@@ -40,6 +40,9 @@ export const deletePost = (id) => {
   })
 };
 
+export const fetchPostsByTag = (tagId) => {
+  return fetch(`${_apiUrl}/filter?tagId=${tagId}`).then(res => res.json())
+}
 export const approvePost = (id) => {
   return fetch(`${_apiUrl}/approve/${id}`, {
     method: "POST"
