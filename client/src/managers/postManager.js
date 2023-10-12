@@ -35,3 +35,7 @@ export const deletePost = (id) => {
       method: "DELETE"
   })
 };
+
+export const fetchPostsByTag = (tagId) => {
+  return fetch(`${_apiUrl}/filter?tagId=${tagId}`).then(res => res.json())
+}
