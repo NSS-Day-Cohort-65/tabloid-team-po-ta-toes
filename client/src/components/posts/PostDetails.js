@@ -82,8 +82,22 @@ export const PostDetails = ({ loggedInUser }) => {
     <>
       <div className="container">
         <h2>{post.title}</h2>
-        <h5>By: {post.userProfile.fullName}
-          {post.userProfileId === loggedInUser.id ? (<></>) : (<Button color='primary' className="mx-2" size="sm" value={post.userProfileId} onClick={handleSubscription}>Subscribe</Button>)}</h5>
+        <h5>
+          By: {post.userProfile.fullName}
+          {post.userProfileId === loggedInUser.id ? (
+            <></>
+          ) : (
+            <Button
+              color="primary"
+              className="mx-2"
+              size="sm"
+              value={post.userProfileId}
+              onClick={handleSubscription}
+            >
+              Subscribe
+            </Button>
+          )}
+        </h5>
         {post.publishDateTime === null ? (
           <h6>Not yet published</h6>
         ) : (
@@ -110,10 +124,13 @@ export const PostDetails = ({ loggedInUser }) => {
             )}
           </Row>
         </div>
-        <ReactionsPostDetails post={post}/>
-      
-        {post.userProfileId === loggedInUser.id ? (
+        <ReactionsPostDetails
+          post={post}
+          getSinglePost={getSinglePost}
+          loggedInUser={loggedInUser}
+        />
 
+        {post.userProfileId === loggedInUser.id ? (
           <Button
             color="warning"
             onClick={() => {
@@ -135,7 +152,6 @@ export const PostDetails = ({ loggedInUser }) => {
             >
               Delete
             </Button>
-
           </>
         ) : (
           <></>
@@ -143,11 +159,18 @@ export const PostDetails = ({ loggedInUser }) => {
         <Button
           className="mx-2"
           color="primary"
-          onClick={() => { navigate(`/posts/${id}/comments`) }}
+          onClick={() => {
+            navigate(`/posts/${id}/comments`);
+          }}
         >
           View Comments
         </Button>
-        <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>Add A Comment</Link>
+        <Link
+          className="btn btn-info"
+          to={`/posts/${id}/newcomment`}
+        >
+          Add A Comment
+        </Link>
         <Modal
           isOpen={modal}
           toggle={toggle}
