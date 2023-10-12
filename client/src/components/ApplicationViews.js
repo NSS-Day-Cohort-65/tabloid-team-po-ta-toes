@@ -15,10 +15,9 @@ import EditCategoryForm from "./categories/EditCategoryForm.js";
 import { CreateNewPost } from "./posts/CreateNewPost.js";
 import { EditPost } from "./posts/EditPost.js";
 import CommentList from "./comments/CommentList.js";
+import { EditComment } from "./comments/EditComment.js";
 import CreateComment from "./comments/CreateComment";
 import { CreateReaction } from "./reactions/CreateReaction";
-
-
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -36,10 +35,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route
             index
             element={
-              <AuthorizedRoute
-                loggedInUser={loggedInUser}
-                roles={['Admin']}
-              >
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
                 <UserProfileList />
               </AuthorizedRoute>
             }
@@ -47,10 +43,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route
             path=":id"
             element={
-              <AuthorizedRoute
-                loggedInUser={loggedInUser}
-                roles={['Admin']}
-              >
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
                 <UserProfileDetails />
               </AuthorizedRoute>
             }
@@ -61,7 +54,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             index
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <PostsAll />
+                <PostsAll loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }
           />
@@ -85,7 +78,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id/comments"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CommentList loggedInUser={loggedInUser}/>
+                <CommentList loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />
@@ -94,6 +87,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id"
             element={<PostDetails loggedInUser={loggedInUser} />}
           ></Route>
+        </Route>
+        <Route path="/comments">
+          <Route
+            path=":id/edit/"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <EditComment />
+              </AuthorizedRoute>
+            }
+          />
+          "
         </Route>
         <Route path="/my-posts">
           <Route
@@ -116,7 +120,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id/edit"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <EditPost loggedInUser={loggedInUser}/>
+                <EditPost loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />
@@ -129,23 +133,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="register"
           element={<Register setLoggedInUser={setLoggedInUser} />}
         />
-        <Route
-          path="tags"
-          element={<ViewAllTags />}
-        />
-        <Route
-          path="tags/create"
-          element={<CreateNewTag />}
-        />
+        <Route path="tags" element={<ViewAllTags />} />
+        <Route path="tags/create" element={<CreateNewTag />} />
       </Route>
       <Route path="/categories">
         <Route
           index
           element={
-            <AuthorizedRoute
-              loggedInUser={loggedInUser}
-              roles={['Admin']}
-            >
+            <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
               <CategoryList />
             </AuthorizedRoute>
           }
@@ -153,10 +148,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         <Route
           path="/categories/create"
           element={
-            <AuthorizedRoute
-              loggedInUser={loggedInUser}
-              roles={['Admin']}
-            >
+            <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
               <NewCategoryForm />
             </AuthorizedRoute>
           }
@@ -164,30 +156,21 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         <Route
           path="/categories/:id/edit"
           element={
-            <AuthorizedRoute
-              loggedInUser={loggedInUser}
-              roles={['Admin']}
-            >
+            <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
               <EditCategoryForm />
             </AuthorizedRoute>
           }
         />
       </Route>
       <Route
-          path="/reactions"
-          element={
-            <AuthorizedRoute
-              loggedInUser={loggedInUser}
-              roles={['Admin']}
-            >
-              <CreateReaction />
-            </AuthorizedRoute>
-          }
-        />
-      <Route
-        path="*"
-        element={<p>Whoops, nothing here...</p>}
+        path="/reactions"
+        element={
+          <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+            <CreateReaction />
+          </AuthorizedRoute>
+        }
       />
+      <Route path="*" element={<p>Whoops, nothing here...</p>} />
     </Routes>
   );
 }

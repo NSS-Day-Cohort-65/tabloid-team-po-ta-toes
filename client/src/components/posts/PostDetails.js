@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
-import { deletePost, fetchSinglePost } from '../../managers/postManager.js';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import './PostDetails.css';
-import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from 'reactstrap';
-import { ReactionsPostDetails } from '../reactions/ReactionsPostDetails.js';
-import { createSubscription } from '../../managers/subscriptionManager.js';
-
+import { useEffect, useState } from "react";
+import { deletePost, fetchSinglePost } from "../../managers/postManager.js";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import "./PostDetails.css";
+import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from "reactstrap";
+import { ReactionsPostDetails } from "../reactions/ReactionsPostDetails.js";
+import { createSubscription } from "../../managers/subscriptionManager.js";
 
 export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
@@ -24,8 +23,7 @@ export const PostDetails = ({ loggedInUser }) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
-    deletePost(post.id)
-      .then(() => navigate("/posts"))
+    deletePost(post.id).then(() => navigate("/posts"));
   };
 
   const handleSubscription = (e) => {
@@ -33,7 +31,7 @@ export const PostDetails = ({ loggedInUser }) => {
 
     let newSubscription = {
       subscriberUserProfileId: loggedInUser.id,
-      providerUserProfileId: parseInt(e.target.value)
+      providerUserProfileId: parseInt(e.target.value),
     };
 
     createSubscription(newSubscription);
@@ -52,27 +50,26 @@ export const PostDetails = ({ loggedInUser }) => {
     const hours = parsedDate.getHours();
     const minutes = parsedDate.getMinutes();
 
-    const formattedDate = `${month.toString().padStart(2, '0')}/${day
+    const formattedDate = `${month.toString().padStart(2, "0")}/${day
       .toString()
-      .padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes
-        .toString()
-        .padStart(2, '0')}`;
+      .padStart(2, "0")}/${year} ${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
 
     return formattedDate;
   };
 
   const readTimeEstimator = (text) => {
     const AvgWPM = 265;
-    const textWordCount = text.split(" ").length
+    const textWordCount = text.split(" ").length;
     const estimatedTime = Math.ceil(textWordCount / AvgWPM);
 
     if (estimatedTime === 1) {
-      return "1 min"
+      return "1 min";
     } else {
-
       return `${estimatedTime} mins`;
     }
-  }
+  };
 
   if (!post) {
     return null;
@@ -113,14 +110,10 @@ export const PostDetails = ({ loggedInUser }) => {
             </Col>
             {post.imageLocation ? (
               <Col className="post-image-col">
-                <img
-                  className="post-image"
-                  src={post.imageLocation}
-                  alt=""
-                />
+                <img className="post-image" src={post.imageLocation} alt="" />
               </Col>
             ) : (
-              ''
+              ""
             )}
           </Row>
         </div>
@@ -187,7 +180,7 @@ export const PostDetails = ({ loggedInUser }) => {
               }}
             >
               Confirm Deletion
-            </Button>{' '}
+            </Button>{" "}
             <Button
               color="primary"
               onClick={() => {
