@@ -111,14 +111,32 @@ public class UserProfileController : ControllerBase
         _dbContext.SaveChanges();
         return NoContent();
     }
-    
+
     [HttpPost("deactivate/{id}")]
     [Authorize(Roles = "Admin")]
     public IActionResult Deactivate(int id)
     {
+        List<UserProfile> Admins = _dbContext.UserProfiles.Select(
+            up => new UserProfile
+            {
+                Id = up.Id,
+                IsActive = up.IsActive,
+                Roles = _dbContext.UserRoles.Where(ur => ur.UserId == up.IdentityUserId).Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name).ToList()
+            })
+            .Where(up => up.Roles.Contains("Admin") && up.IsActive == true).ToList();
+
         UserProfile foundUser = _dbContext.UserProfiles.SingleOrDefault(up => up.Id == id);
+        foreach (UserProfile admin in Admins)
+        {
+            if (admin.Id == foundUser.Id && Admins.Count < 2)
+            {
+                return BadRequest("You must have atleast one admin active at all times. Please make someone else an admin before the User Profile can be deactivated");
+            }
+        }
         foundUser.IsActive = false;
         _dbContext.SaveChanges();
         return NoContent();
     }
+
+
 }
