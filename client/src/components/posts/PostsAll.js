@@ -1,15 +1,47 @@
 import { useEffect, useState } from 'react';
-import { fetchAllPosts } from '../../managers/postManager.js';
+import { approvePost, fetchAllPosts, fetchAllPostsForAdmin, unapprovePost } from '../../managers/postManager.js';
 import { Button, Table } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 
-export const PostsAll = () => {
+export const PostsAll = ({ loggedInUser }) => {
   const [posts, setPosts] = useState();
   const navigate = useNavigate()
 
   const getAllPosts = () => {
-    fetchAllPosts().then(setPosts);
+    if (loggedInUser?.roles?.includes("Admin"))
+    {
+      fetchAllPostsForAdmin().then(setPosts)
+    }
+    else {
+      fetchAllPosts().then(setPosts);
+    }
   };
+
+  const handleApprove = (e, postId) => {
+    e.preventDefault();
+
+    approvePost(postId)
+      .then(() => getAllPosts())
+  }
+  
+  const handleUnapprove = (e, postId) => {
+    e.preventDefault();
+
+    unapprovePost(postId)
+      .then(() => getAllPosts())
+  }
+
+  const showApprovalStatus = (post) => {
+    if (post.isApproved === true) {
+      return <td>
+        <Button color='danger' onClick={(e) => handleUnapprove(e, post.id)}> Unapprove Post</Button>
+        </td>
+    } else {
+      return <td>
+      <Button color='primary' onClick={(e) => handleApprove(e, post.id)}> Approve Post</Button>
+      </td>
+    }
+  }
 
   useEffect(() => {
     getAllPosts();
@@ -39,6 +71,11 @@ export const PostsAll = () => {
                 <td>
                   <Button onClick={() => navigate(`${[p.id]}`)}>View Post</Button>
                 </td>
+                {
+                  loggedInUser?.roles?.includes("Admin") 
+                  ? showApprovalStatus(p) 
+                  :<></>
+                }
               </tr>
             ))}
           </tbody>

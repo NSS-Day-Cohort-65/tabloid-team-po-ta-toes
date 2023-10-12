@@ -30,6 +30,18 @@ public class PostController : ControllerBase
         .OrderBy(p => p.PublishDateTime)
         .ToList());
     }
+    [HttpGet("admin")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult GetAllPosts()
+    {
+        return Ok(_dbContext.Posts
+        .Include(p => p.Category)
+        .Include(p => p.UserProfile)
+        .Include(p => p.PostTags)
+        .ThenInclude(pt => pt.Tag)
+        .OrderBy(p => p.PublishDateTime)
+        .ToList());
+    }
 
 
     [HttpGet("{id}")]
@@ -176,6 +188,30 @@ public class PostController : ControllerBase
         }
 
         _dbContext.Remove(PostToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpPost("approve/{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult ApprovePost(int id)
+    {
+        Post foundPost = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        foundPost.IsApproved = true;
+        foundPost.PublishDateTime = DateTime.Now;
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+    
+    [HttpPost("unapprove/{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult UnapprovePost(int id)
+    {
+        Post foundPost = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        foundPost.IsApproved = false;
+        foundPost.PublishDateTime = null;
         _dbContext.SaveChanges();
 
         return NoContent();
