@@ -117,7 +117,11 @@ export const PostDetails = ({ loggedInUser }) => {
             )}
           </Row>
         </div>
-        <ReactionsPostDetails post={post} />
+        <ReactionsPostDetails
+          post={post}
+          getSinglePost={getSinglePost}
+          loggedInUser={loggedInUser}
+        />
 
         {post.userProfileId === loggedInUser.id ? (
           <Button
@@ -154,10 +158,16 @@ export const PostDetails = ({ loggedInUser }) => {
         >
           View Comments
         </Button>
-        <Link className="btn btn-info" to={`/posts/${id}/newcomment`}>
+        <Link
+          className="btn btn-info"
+          to={`/posts/${id}/newcomment`}
+        >
           Add A Comment
         </Link>
-        <Modal isOpen={modal} toggle={toggle}>
+        <Modal
+          isOpen={modal}
+          toggle={toggle}
+        >
           <ModalHeader toggle={toggle}>
             Are you sure you want to delete this Post?
           </ModalHeader>

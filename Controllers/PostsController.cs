@@ -30,6 +30,18 @@ public class PostController : ControllerBase
         .OrderBy(p => p.PublishDateTime)
         .ToList());
     }
+    [HttpGet("admin")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult GetAllPosts()
+    {
+        return Ok(_dbContext.Posts
+        .Include(p => p.Category)
+        .Include(p => p.UserProfile)
+        .Include(p => p.PostTags)
+        .ThenInclude(pt => pt.Tag)
+        .OrderBy(p => p.PublishDateTime)
+        .ToList());
+    }
 
 
     [HttpGet("{id}")]
@@ -180,4 +192,46 @@ public class PostController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("filter")]
+    // [Authorize]
+
+    public IActionResult getPostsByTagId(int? tagId)
+    {
+        //need to find Posts.postTags.Id that match the tagId passed in from the front-end
+        return Ok(_dbContext.Posts
+        .Include(p => p.Category)
+        .Include(p => p.UserProfile)
+        .Include(p => p.PostTags)
+        .ThenInclude(pt => pt.Tag)
+        .Where(p => p.IsApproved == true && p.PublishDateTime < DateTime.Now)
+        .Where(p => p.PostTags.Any(pt => pt.TagId == tagId))
+        .OrderBy(p => p.PublishDateTime)
+        .ToList());
+    }
+        
+    [HttpPost("approve/{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult ApprovePost(int id)
+    {
+        Post foundPost = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        foundPost.IsApproved = true;
+        foundPost.PublishDateTime = DateTime.Now;
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+    
+    [HttpPost("unapprove/{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult UnapprovePost(int id)
+    {
+        Post foundPost = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        foundPost.IsApproved = false;
+        foundPost.PublishDateTime = null;
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+    
 }
