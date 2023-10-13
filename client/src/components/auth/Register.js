@@ -2,6 +2,7 @@ import { useState } from "react";
 import { register } from "../../managers/authManager";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+import { ProfilePicUpload } from "../imageUpload/ProfilePicUpload.js";
 
 export default function Register({ setLoggedInUser }) {
   const [firstName, setFirstName] = useState("");
@@ -86,14 +87,7 @@ export default function Register({ setLoggedInUser }) {
         />
       </FormGroup>
       <FormGroup>
-        <Label>Image URL</Label>
-        <Input
-          type="text"
-          value={imageLocation}
-          onChange={(e) => {
-            setImageLocation(e.target.value);
-          }}
-        />
+        <ProfilePicUpload setImageLocation={setImageLocation}/>
       </FormGroup>
       <FormGroup>
         <Label>Password</Label>

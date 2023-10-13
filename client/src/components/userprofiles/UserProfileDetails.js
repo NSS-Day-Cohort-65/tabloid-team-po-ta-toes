@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getProfile } from "../../managers/userProfileManager";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getProfile } from '../../managers/userProfileManager';
+import { ProfilePicUpdate } from '../imageUpload/ProfilePicUpdate.js';
+import "./UserProfiles.css"
 
-export default function UserProfileDetails() {
+export default function UserProfileDetails({ loggedInUser }) {
   const [userProfile, setUserProfile] = useState();
 
   const { id } = useParams();
 
-  useEffect(() => {
+  const getProfileFunc = () => {
     getProfile(id).then(setUserProfile);
+  };
+
+  useEffect(() => {
+    getProfileFunc();
   }, [id]);
 
   const dateFormatter = (date) => {
@@ -34,12 +40,28 @@ export default function UserProfileDetails() {
   }
   return (
     <>
-      <img src={userProfile.imageLocation} alt={userProfile.firstName} />
+      <img
+        className="profile-pic"
+        src={userProfile.imageLocation}
+        alt={userProfile.firstName}
+      />
       <h3>{userProfile.fullName}</h3>
       <p>Username: {userProfile.userName}</p>
       <p>Email: {userProfile.email}</p>
       <p>Creation Date: {dateFormatter(userProfile.createDateTime)}</p>
-      <p>User Profile Type(s): {userProfile.roles.length ? userProfile.roles.map(r => r + " ") : "Default"}</p>
+      <p>
+        User Profile Type(s):{' '}
+        {userProfile.roles.length
+          ? userProfile.roles.map((r) => r + ' ')
+          : 'Default'}
+      </p>
+      {
+        loggedInUser.id === userProfile.id ?
+        <ProfilePicUpdate getProfileFunc={getProfileFunc} />
+        :
+        ""
+
+      }
     </>
   );
 }
