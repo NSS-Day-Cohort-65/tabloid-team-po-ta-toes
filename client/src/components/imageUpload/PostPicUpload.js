@@ -15,7 +15,7 @@ export const PostPicUpload = ({ newPost, setNewPost }) => {
 
   return (
     <>
-      <Label>Upload a picture for the post - optional:</Label>
+      <Label>Upload a picture for the post : optional:</Label>
       <Input
         type="file"
         onChange={handleUpload}
