@@ -12,6 +12,7 @@ import { getCategories } from '../../managers/categoryManager.js';
 import { getAllTags } from '../../managers/tagManager.js';
 import { fetchEditPost, fetchSinglePost } from '../../managers/postManager.js';
 import { useNavigate, useParams } from 'react-router-dom';
+import { PostPicUpdate } from '../imageUpload/PostPicUpdate.js';
 
 export const EditPost = ({ loggedInUser }) => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export const EditPost = ({ loggedInUser }) => {
     getAllTags().then(setTags);
   };
   const getPosts = () => {
-    fetchSinglePost(id).then((res) => {
+    fetchSinglePost(id, loggedInUser.id).then((res) => {
       let convertedPostTags = [];
       for (const t of res.postTags) {
         const tag = {
@@ -138,13 +139,7 @@ export const EditPost = ({ loggedInUser }) => {
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label htmlFor="imageLocation">Image Url (optional):</Label>
-            <Input
-              value={postToEdit?.imageLocation}
-              name="imageLocation"
-              onChange={handleChange}
-              type="url"
-            />
+            <PostPicUpdate postToEdit={postToEdit} setPostToEdit={setPostToEdit}/>
           </FormGroup>
           <FormGroup>
             <Label htmlFor="content">Content:</Label>

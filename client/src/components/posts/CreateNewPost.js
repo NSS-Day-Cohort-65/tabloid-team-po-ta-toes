@@ -4,6 +4,7 @@ import { getCategories } from '../../managers/categoryManager.js';
 import { getAllTags } from '../../managers/tagManager.js';
 import { fetchCreateNewPost } from '../../managers/postManager.js';
 import { useNavigate } from 'react-router-dom';
+import { PostPicUpload } from '../imageUpload/PostPicUpload.js';
 
 export const CreateNewPost = ({ loggedInUser }) => {
   const navigate = useNavigate();
@@ -116,12 +117,7 @@ export const CreateNewPost = ({ loggedInUser }) => {
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label htmlFor="imageLocation">Image Url (optional):</Label>
-            <Input
-              name="imageLocation"
-              onChange={handleChange}
-              type="url"
-            />
+            <PostPicUpload newPost={newPost} setNewPost={setNewPost} />
           </FormGroup>
           <FormGroup>
             <Label htmlFor="content">Content:</Label>
