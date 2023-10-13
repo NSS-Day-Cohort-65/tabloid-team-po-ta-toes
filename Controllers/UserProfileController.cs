@@ -4,6 +4,7 @@ using Tabloid.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Tabloid.Controllers;
 
@@ -135,6 +136,25 @@ public class UserProfileController : ControllerBase
         }
         foundUser.IsActive = false;
         _dbContext.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpPut("updateprofilepic")]
+    [Authorize]
+    public IActionResult UpdateProfilePic([FromBody]string url)
+    {
+        var userProfileToUpdate = _dbContext
+            .UserProfiles
+            .SingleOrDefault(up => up.IdentityUserId == User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+        if (userProfileToUpdate == null)
+        {
+            return BadRequest();
+        }
+
+        userProfileToUpdate.ImageLocation = url;
+        _dbContext.SaveChanges();
+
         return NoContent();
     }
 
