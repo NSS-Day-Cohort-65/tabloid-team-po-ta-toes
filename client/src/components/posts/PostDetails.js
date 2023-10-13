@@ -4,17 +4,31 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "./PostDetails.css";
 import { Button, Col, Modal, ModalFooter, ModalHeader, Row } from "reactstrap";
 import { ReactionsPostDetails } from "../reactions/ReactionsPostDetails.js";
-import { createSubscription } from "../../managers/subscriptionManager.js";
+import { createSubscription, endSubscription, getActiveUserSubscriptions } from "../../managers/subscriptionManager.js";
 
 export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState();
   const [modal, setModal] = useState(false);
+  const [activeUserSubscriptions, setActiveUserSubscriptions] = useState([]);
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
   const getSinglePost = () => {
     fetchSinglePost(id, loggedInUser.id).then(setPost);
   };
+
+  const getLoggedInUserActiveSubscriptions = () => {
+    getActiveUserSubscriptions(loggedInUser.id).then(setActiveUserSubscriptions);
+  }
+
+  const checkIsActiveSubscribed = (activeUserSubscriptions) => {
+    for (const sub of activeUserSubscriptions) {
+      if (sub.subscriberUserProfileId == loggedInUser.id) {
+        setIsSubscribed(true);
+      }
+    }
+  }
 
   const toggle = () => {
     setModal(!modal);
@@ -34,12 +48,35 @@ export const PostDetails = ({ loggedInUser }) => {
       providerUserProfileId: parseInt(e.target.value),
     };
 
-    createSubscription(newSubscription);
+    createSubscription(newSubscription)
+    .then(() => getLoggedInUserActiveSubscriptions());
+  };
+
+  const handleUnsubscribe = (e) => {
+    e.preventDefault();
+
+    let subscriptionIdToDeactivate;
+
+    for (const sub of activeUserSubscriptions) {
+      if (sub.subscriberUserProfileId == loggedInUser.id
+        && sub.providerUserProfileId == parseInt(e.target.value)) {
+        subscriptionIdToDeactivate = sub.id
+      }
+    };
+
+    setIsSubscribed(false);
+    endSubscription(subscriptionIdToDeactivate)
+      .then(() => getLoggedInUserActiveSubscriptions());
   };
 
   useEffect(() => {
     getSinglePost();
+    getLoggedInUserActiveSubscriptions();
   }, []);
+
+  useEffect(() => {
+    checkIsActiveSubscribed(activeUserSubscriptions);
+  }, [activeUserSubscriptions])
 
   const dateFormatter = (date) => {
     const parsedDate = new Date(date);
@@ -75,25 +112,15 @@ export const PostDetails = ({ loggedInUser }) => {
     return null;
   }
 
+
   return (
     <>
       <div className="container">
         <h2>{post.title}</h2>
-        <h5>
-          By: {post.userProfile.fullName}
-          {post.userProfileId === loggedInUser.id ? (
-            <></>
-          ) : (
-            <Button
-              color="primary"
-              className="mx-2"
-              size="sm"
-              value={post.userProfileId}
-              onClick={handleSubscription}
-            >
-              Subscribe
-            </Button>
-          )}
+        <h5>By: {post.userProfile.fullName}
+          {post.userProfileId === loggedInUser.id
+            ? <></> : isSubscribed ? (<Button color='primary' className="mx-2" size="sm" value={post.userProfileId} onClick={handleUnsubscribe}>Unsubscribe</Button>)
+              : (<Button color='primary' className="mx-2" size="sm" value={post.userProfileId} onClick={handleSubscription}>Subscribe</Button>)}
         </h5>
         {post.publishDateTime === null ? (
           <h6>Not yet published</h6>

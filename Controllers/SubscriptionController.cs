@@ -17,6 +17,20 @@ public class SubscriptionController : ControllerBase
         _dbContext = db;
     }
 
+    [HttpGet("{id}")]
+    public IActionResult GetActiveSubscriptionsByUserId(int id)
+    {
+        List<Subscription> CurrentActiveSubscriptions = _dbContext
+        .Subscriptions
+        .Where(s => s.SubscriberUserProfileId == id && s.EndDateTime == null)
+        .ToList();
+        if(CurrentActiveSubscriptions == null)
+        {
+            return NotFound();
+        }
+        return Ok(CurrentActiveSubscriptions);
+    }
+
     [HttpPost]
     public IActionResult CreateNewSubscription(Subscription subscription)
     {
@@ -26,6 +40,21 @@ public class SubscriptionController : ControllerBase
         _dbContext.SaveChanges();
 
         return Created($"/api/subscription/{subscription.Id}", subscription);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult EndSubscription(int id)
+    {
+        Subscription subscriptionToEnd = _dbContext.Subscriptions.SingleOrDefault(s => s.Id == id);
+        if (subscriptionToEnd == null)
+        {
+            return NotFound();
+        }
+
+        subscriptionToEnd.EndDateTime = DateTime.Now;
+        _dbContext.SaveChanges();
+
+        return NoContent();
     }
 
 }
